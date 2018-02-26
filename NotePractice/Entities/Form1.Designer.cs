@@ -88,13 +88,6 @@
             this.cb7 = new System.Windows.Forms.CheckBox();
             this.cb5 = new System.Windows.Forms.CheckBox();
             this.cb3 = new System.Windows.Forms.CheckBox();
-            this.lblCorrect = new System.Windows.Forms.Label();
-            this.lblTotal = new System.Windows.Forms.Label();
-            this.lblScore = new System.Windows.Forms.Label();
-            this.txtCorrect = new System.Windows.Forms.TextBox();
-            this.txtScore = new System.Windows.Forms.TextBox();
-            this.txtTotal = new System.Windows.Forms.TextBox();
-            this.btnTimer = new System.Windows.Forms.Button();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.cb29 = new System.Windows.Forms.CheckBox();
             this.N29 = new System.Windows.Forms.PictureBox();
@@ -144,12 +137,20 @@
             this.lblBG3 = new System.Windows.Forms.Label();
             this.lblBB3 = new System.Windows.Forms.Label();
             this.lblBA4 = new System.Windows.Forms.Label();
-            this.btnReset = new System.Windows.Forms.Button();
-            this.pnScore = new System.Windows.Forms.Panel();
-            this.txtSetInterval = new System.Windows.Forms.TextBox();
-            this.txtTimer1 = new System.Windows.Forms.TextBox();
-            this.cbInterval = new System.Windows.Forms.CheckBox();
             this.pnCheckBoxes = new System.Windows.Forms.Panel();
+            this.cbFocus = new System.Windows.Forms.CheckBox();
+            this.lblTimerDisplay = new System.Windows.Forms.Label();
+            this.btnResetNew = new System.Windows.Forms.Button();
+            this.btnPractice = new System.Windows.Forms.Button();
+            this.pnlStatistics = new System.Windows.Forms.Panel();
+            this.lblAccuracyDisplay = new System.Windows.Forms.Label();
+            this.lblTotalDisplay = new System.Windows.Forms.Label();
+            this.lblTotalPoints = new System.Windows.Forms.Label();
+            this.lblAccuracy = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.cbPreset = new System.Windows.Forms.ComboBox();
+            this.lblPointsDisplay = new System.Windows.Forms.Label();
+            this.FadeTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.N6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trebleClef)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.N20)).BeginInit();
@@ -194,14 +195,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.N39)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.N41)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bassClef)).BeginInit();
-            this.pnScore.SuspendLayout();
             this.pnCheckBoxes.SuspendLayout();
+            this.pnlStatistics.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblF5
             // 
             this.lblF5.AutoSize = true;
-            this.lblF5.Location = new System.Drawing.Point(195, 184);
+            this.lblF5.BackColor = System.Drawing.Color.Transparent;
+            this.lblF5.Location = new System.Drawing.Point(91, 172);
             this.lblF5.Name = "lblF5";
             this.lblF5.Size = new System.Drawing.Size(508, 13);
             this.lblF5.TabIndex = 0;
@@ -212,7 +214,8 @@
             // lblG4
             // 
             this.lblG4.AutoSize = true;
-            this.lblG4.Location = new System.Drawing.Point(195, 276);
+            this.lblG4.BackColor = System.Drawing.Color.Transparent;
+            this.lblG4.Location = new System.Drawing.Point(91, 264);
             this.lblG4.Name = "lblG4";
             this.lblG4.Size = new System.Drawing.Size(508, 13);
             this.lblG4.TabIndex = 1;
@@ -223,7 +226,8 @@
             // lblE4
             // 
             this.lblE4.AutoSize = true;
-            this.lblE4.Location = new System.Drawing.Point(194, 308);
+            this.lblE4.BackColor = System.Drawing.Color.Transparent;
+            this.lblE4.Location = new System.Drawing.Point(90, 296);
             this.lblE4.Name = "lblE4";
             this.lblE4.Size = new System.Drawing.Size(508, 13);
             this.lblE4.TabIndex = 2;
@@ -234,7 +238,8 @@
             // lblB4
             // 
             this.lblB4.AutoSize = true;
-            this.lblB4.Location = new System.Drawing.Point(194, 246);
+            this.lblB4.BackColor = System.Drawing.Color.Transparent;
+            this.lblB4.Location = new System.Drawing.Point(90, 234);
             this.lblB4.Name = "lblB4";
             this.lblB4.Size = new System.Drawing.Size(508, 13);
             this.lblB4.TabIndex = 3;
@@ -245,7 +250,8 @@
             // lblD4
             // 
             this.lblD4.AutoSize = true;
-            this.lblD4.Location = new System.Drawing.Point(195, 216);
+            this.lblD4.BackColor = System.Drawing.Color.Transparent;
+            this.lblD4.Location = new System.Drawing.Point(91, 204);
             this.lblD4.Name = "lblD4";
             this.lblD4.Size = new System.Drawing.Size(508, 13);
             this.lblD4.TabIndex = 4;
@@ -258,7 +264,7 @@
             this.N6.BackColor = System.Drawing.Color.Transparent;
             this.N6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N6.Image = ((System.Drawing.Image)(resources.GetObject("N6.Image")));
-            this.N6.Location = new System.Drawing.Point(380, 317);
+            this.N6.Location = new System.Drawing.Point(300, 305);
             this.N6.Name = "N6";
             this.N6.Size = new System.Drawing.Size(29, 27);
             this.N6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -269,9 +275,9 @@
             // 
             this.trebleClef.BackColor = System.Drawing.Color.Transparent;
             this.trebleClef.Image = ((System.Drawing.Image)(resources.GetObject("trebleClef.Image")));
-            this.trebleClef.Location = new System.Drawing.Point(58, 175);
+            this.trebleClef.Location = new System.Drawing.Point(62, 126);
             this.trebleClef.Name = "trebleClef";
-            this.trebleClef.Size = new System.Drawing.Size(96, 153);
+            this.trebleClef.Size = new System.Drawing.Size(123, 246);
             this.trebleClef.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.trebleClef.TabIndex = 6;
             this.trebleClef.TabStop = false;
@@ -279,7 +285,8 @@
             // lblC4
             // 
             this.lblC4.AutoSize = true;
-            this.lblC4.Location = new System.Drawing.Point(356, 339);
+            this.lblC4.BackColor = System.Drawing.Color.Transparent;
+            this.lblC4.Location = new System.Drawing.Point(276, 327);
             this.lblC4.Name = "lblC4";
             this.lblC4.Size = new System.Drawing.Size(91, 13);
             this.lblC4.TabIndex = 11;
@@ -288,7 +295,8 @@
             // lblF4
             // 
             this.lblF4.AutoSize = true;
-            this.lblF4.Location = new System.Drawing.Point(357, 400);
+            this.lblF4.BackColor = System.Drawing.Color.Transparent;
+            this.lblF4.Location = new System.Drawing.Point(277, 388);
             this.lblF4.Name = "lblF4";
             this.lblF4.Size = new System.Drawing.Size(91, 13);
             this.lblF4.TabIndex = 12;
@@ -297,7 +305,8 @@
             // lblA4
             // 
             this.lblA4.AutoSize = true;
-            this.lblA4.Location = new System.Drawing.Point(357, 369);
+            this.lblA4.BackColor = System.Drawing.Color.Transparent;
+            this.lblA4.Location = new System.Drawing.Point(277, 357);
             this.lblA4.Name = "lblA4";
             this.lblA4.Size = new System.Drawing.Size(91, 13);
             this.lblA4.TabIndex = 13;
@@ -306,7 +315,8 @@
             // lblA5
             // 
             this.lblA5.AutoSize = true;
-            this.lblA5.Location = new System.Drawing.Point(355, 155);
+            this.lblA5.BackColor = System.Drawing.Color.Transparent;
+            this.lblA5.Location = new System.Drawing.Point(275, 143);
             this.lblA5.Name = "lblA5";
             this.lblA5.Size = new System.Drawing.Size(91, 13);
             this.lblA5.TabIndex = 14;
@@ -315,7 +325,8 @@
             // lblE6
             // 
             this.lblE6.AutoSize = true;
-            this.lblE6.Location = new System.Drawing.Point(354, 95);
+            this.lblE6.BackColor = System.Drawing.Color.Transparent;
+            this.lblE6.Location = new System.Drawing.Point(274, 83);
             this.lblE6.Name = "lblE6";
             this.lblE6.Size = new System.Drawing.Size(91, 13);
             this.lblE6.TabIndex = 16;
@@ -324,7 +335,8 @@
             // lblC5
             // 
             this.lblC5.AutoSize = true;
-            this.lblC5.Location = new System.Drawing.Point(355, 124);
+            this.lblC5.BackColor = System.Drawing.Color.Transparent;
+            this.lblC5.Location = new System.Drawing.Point(275, 112);
             this.lblC5.Name = "lblC5";
             this.lblC5.Size = new System.Drawing.Size(91, 13);
             this.lblC5.TabIndex = 17;
@@ -332,9 +344,10 @@
             // 
             // N20
             // 
+            this.N20.BackColor = System.Drawing.Color.Transparent;
             this.N20.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N20.Image = ((System.Drawing.Image)(resources.GetObject("N20.Image")));
-            this.N20.Location = new System.Drawing.Point(379, 104);
+            this.N20.Location = new System.Drawing.Point(299, 92);
             this.N20.Name = "N20";
             this.N20.Size = new System.Drawing.Size(29, 27);
             this.N20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -343,9 +356,10 @@
             // 
             // N18
             // 
+            this.N18.BackColor = System.Drawing.Color.Transparent;
             this.N18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N18.Image = ((System.Drawing.Image)(resources.GetObject("N18.Image")));
-            this.N18.Location = new System.Drawing.Point(379, 133);
+            this.N18.Location = new System.Drawing.Point(299, 121);
             this.N18.Name = "N18";
             this.N18.Size = new System.Drawing.Size(29, 27);
             this.N18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -354,9 +368,10 @@
             // 
             // N16
             // 
+            this.N16.BackColor = System.Drawing.Color.Transparent;
             this.N16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N16.Image = ((System.Drawing.Image)(resources.GetObject("N16.Image")));
-            this.N16.Location = new System.Drawing.Point(379, 164);
+            this.N16.Location = new System.Drawing.Point(299, 152);
             this.N16.Name = "N16";
             this.N16.Size = new System.Drawing.Size(29, 27);
             this.N16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -365,9 +380,10 @@
             // 
             // N14
             // 
+            this.N14.BackColor = System.Drawing.Color.Transparent;
             this.N14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N14.Image = ((System.Drawing.Image)(resources.GetObject("N14.Image")));
-            this.N14.Location = new System.Drawing.Point(380, 194);
+            this.N14.Location = new System.Drawing.Point(300, 182);
             this.N14.Name = "N14";
             this.N14.Size = new System.Drawing.Size(29, 27);
             this.N14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -376,9 +392,10 @@
             // 
             // N12
             // 
+            this.N12.BackColor = System.Drawing.Color.Transparent;
             this.N12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N12.Image = ((System.Drawing.Image)(resources.GetObject("N12.Image")));
-            this.N12.Location = new System.Drawing.Point(380, 225);
+            this.N12.Location = new System.Drawing.Point(300, 213);
             this.N12.Name = "N12";
             this.N12.Size = new System.Drawing.Size(29, 27);
             this.N12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -387,9 +404,10 @@
             // 
             // N10
             // 
+            this.N10.BackColor = System.Drawing.Color.Transparent;
             this.N10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N10.Image = ((System.Drawing.Image)(resources.GetObject("N10.Image")));
-            this.N10.Location = new System.Drawing.Point(379, 255);
+            this.N10.Location = new System.Drawing.Point(299, 243);
             this.N10.Name = "N10";
             this.N10.Size = new System.Drawing.Size(29, 27);
             this.N10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -398,9 +416,10 @@
             // 
             // N8
             // 
+            this.N8.BackColor = System.Drawing.Color.Transparent;
             this.N8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N8.Image = ((System.Drawing.Image)(resources.GetObject("N8.Image")));
-            this.N8.Location = new System.Drawing.Point(379, 285);
+            this.N8.Location = new System.Drawing.Point(299, 273);
             this.N8.Name = "N8";
             this.N8.Size = new System.Drawing.Size(29, 27);
             this.N8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -409,9 +428,10 @@
             // 
             // N2
             // 
+            this.N2.BackColor = System.Drawing.Color.Transparent;
             this.N2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N2.Image = ((System.Drawing.Image)(resources.GetObject("N2.Image")));
-            this.N2.Location = new System.Drawing.Point(380, 378);
+            this.N2.Location = new System.Drawing.Point(300, 366);
             this.N2.Name = "N2";
             this.N2.Size = new System.Drawing.Size(29, 27);
             this.N2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -420,9 +440,10 @@
             // 
             // N4
             // 
+            this.N4.BackColor = System.Drawing.Color.Transparent;
             this.N4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N4.Image = ((System.Drawing.Image)(resources.GetObject("N4.Image")));
-            this.N4.Location = new System.Drawing.Point(381, 348);
+            this.N4.Location = new System.Drawing.Point(301, 336);
             this.N4.Name = "N4";
             this.N4.Size = new System.Drawing.Size(29, 27);
             this.N4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -431,9 +452,10 @@
             // 
             // N22
             // 
+            this.N22.BackColor = System.Drawing.Color.Transparent;
             this.N22.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N22.Image = ((System.Drawing.Image)(resources.GetObject("N22.Image")));
-            this.N22.Location = new System.Drawing.Point(379, 71);
+            this.N22.Location = new System.Drawing.Point(299, 59);
             this.N22.Name = "N22";
             this.N22.Size = new System.Drawing.Size(29, 27);
             this.N22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -442,9 +464,10 @@
             // 
             // N0
             // 
+            this.N0.BackColor = System.Drawing.Color.Transparent;
             this.N0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N0.Image = ((System.Drawing.Image)(resources.GetObject("N0.Image")));
-            this.N0.Location = new System.Drawing.Point(381, 409);
+            this.N0.Location = new System.Drawing.Point(301, 397);
             this.N0.Name = "N0";
             this.N0.Size = new System.Drawing.Size(29, 27);
             this.N0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -453,9 +476,10 @@
             // 
             // N21
             // 
+            this.N21.BackColor = System.Drawing.Color.Transparent;
             this.N21.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N21.Image = ((System.Drawing.Image)(resources.GetObject("N21.Image")));
-            this.N21.Location = new System.Drawing.Point(380, 87);
+            this.N21.Location = new System.Drawing.Point(300, 75);
             this.N21.Name = "N21";
             this.N21.Size = new System.Drawing.Size(29, 27);
             this.N21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -464,9 +488,10 @@
             // 
             // N19
             // 
+            this.N19.BackColor = System.Drawing.Color.Transparent;
             this.N19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N19.Image = ((System.Drawing.Image)(resources.GetObject("N19.Image")));
-            this.N19.Location = new System.Drawing.Point(381, 117);
+            this.N19.Location = new System.Drawing.Point(301, 105);
             this.N19.Name = "N19";
             this.N19.Size = new System.Drawing.Size(29, 27);
             this.N19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -475,9 +500,10 @@
             // 
             // N17
             // 
+            this.N17.BackColor = System.Drawing.Color.Transparent;
             this.N17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N17.Image = ((System.Drawing.Image)(resources.GetObject("N17.Image")));
-            this.N17.Location = new System.Drawing.Point(381, 148);
+            this.N17.Location = new System.Drawing.Point(301, 136);
             this.N17.Name = "N17";
             this.N17.Size = new System.Drawing.Size(29, 27);
             this.N17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -486,9 +512,10 @@
             // 
             // N15
             // 
+            this.N15.BackColor = System.Drawing.Color.Transparent;
             this.N15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N15.Image = ((System.Drawing.Image)(resources.GetObject("N15.Image")));
-            this.N15.Location = new System.Drawing.Point(381, 178);
+            this.N15.Location = new System.Drawing.Point(301, 166);
             this.N15.Name = "N15";
             this.N15.Size = new System.Drawing.Size(29, 27);
             this.N15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -497,9 +524,10 @@
             // 
             // N13
             // 
+            this.N13.BackColor = System.Drawing.Color.Transparent;
             this.N13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N13.Image = ((System.Drawing.Image)(resources.GetObject("N13.Image")));
-            this.N13.Location = new System.Drawing.Point(381, 208);
+            this.N13.Location = new System.Drawing.Point(301, 196);
             this.N13.Name = "N13";
             this.N13.Size = new System.Drawing.Size(29, 27);
             this.N13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -508,9 +536,10 @@
             // 
             // N11
             // 
+            this.N11.BackColor = System.Drawing.Color.Transparent;
             this.N11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N11.Image = ((System.Drawing.Image)(resources.GetObject("N11.Image")));
-            this.N11.Location = new System.Drawing.Point(381, 239);
+            this.N11.Location = new System.Drawing.Point(301, 227);
             this.N11.Name = "N11";
             this.N11.Size = new System.Drawing.Size(29, 27);
             this.N11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -519,9 +548,10 @@
             // 
             // N9
             // 
+            this.N9.BackColor = System.Drawing.Color.Transparent;
             this.N9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N9.Image = ((System.Drawing.Image)(resources.GetObject("N9.Image")));
-            this.N9.Location = new System.Drawing.Point(380, 270);
+            this.N9.Location = new System.Drawing.Point(300, 258);
             this.N9.Name = "N9";
             this.N9.Size = new System.Drawing.Size(29, 27);
             this.N9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -533,7 +563,7 @@
             this.N7.BackColor = System.Drawing.Color.Transparent;
             this.N7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N7.Image = ((System.Drawing.Image)(resources.GetObject("N7.Image")));
-            this.N7.Location = new System.Drawing.Point(380, 301);
+            this.N7.Location = new System.Drawing.Point(300, 289);
             this.N7.Name = "N7";
             this.N7.Size = new System.Drawing.Size(29, 27);
             this.N7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -542,9 +572,10 @@
             // 
             // N5
             // 
+            this.N5.BackColor = System.Drawing.Color.Transparent;
             this.N5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N5.Image = ((System.Drawing.Image)(resources.GetObject("N5.Image")));
-            this.N5.Location = new System.Drawing.Point(380, 331);
+            this.N5.Location = new System.Drawing.Point(300, 319);
             this.N5.Name = "N5";
             this.N5.Size = new System.Drawing.Size(29, 27);
             this.N5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -553,9 +584,10 @@
             // 
             // N3
             // 
+            this.N3.BackColor = System.Drawing.Color.Transparent;
             this.N3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N3.Image = ((System.Drawing.Image)(resources.GetObject("N3.Image")));
-            this.N3.Location = new System.Drawing.Point(380, 361);
+            this.N3.Location = new System.Drawing.Point(300, 349);
             this.N3.Name = "N3";
             this.N3.Size = new System.Drawing.Size(29, 27);
             this.N3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -564,9 +596,10 @@
             // 
             // N1
             // 
+            this.N1.BackColor = System.Drawing.Color.Transparent;
             this.N1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N1.Image = ((System.Drawing.Image)(resources.GetObject("N1.Image")));
-            this.N1.Location = new System.Drawing.Point(380, 392);
+            this.N1.Location = new System.Drawing.Point(300, 380);
             this.N1.Name = "N1";
             this.N1.Size = new System.Drawing.Size(29, 27);
             this.N1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -576,7 +609,7 @@
             // cb1
             // 
             this.cb1.AutoSize = true;
-            this.cb1.Location = new System.Drawing.Point(18, 356);
+            this.cb1.Location = new System.Drawing.Point(7, 351);
             this.cb1.Name = "cb1";
             this.cb1.Size = new System.Drawing.Size(15, 14);
             this.cb1.TabIndex = 42;
@@ -585,7 +618,7 @@
             // cb22
             // 
             this.cb22.AutoSize = true;
-            this.cb22.Location = new System.Drawing.Point(17, 32);
+            this.cb22.Location = new System.Drawing.Point(6, 26);
             this.cb22.Name = "cb22";
             this.cb22.Size = new System.Drawing.Size(29, 17);
             this.cb22.TabIndex = 43;
@@ -595,7 +628,7 @@
             // cb20
             // 
             this.cb20.AutoSize = true;
-            this.cb20.Location = new System.Drawing.Point(17, 63);
+            this.cb20.Location = new System.Drawing.Point(6, 58);
             this.cb20.Name = "cb20";
             this.cb20.Size = new System.Drawing.Size(15, 14);
             this.cb20.TabIndex = 44;
@@ -604,7 +637,7 @@
             // cb18
             // 
             this.cb18.AutoSize = true;
-            this.cb18.Location = new System.Drawing.Point(18, 94);
+            this.cb18.Location = new System.Drawing.Point(7, 89);
             this.cb18.Name = "cb18";
             this.cb18.Size = new System.Drawing.Size(15, 14);
             this.cb18.TabIndex = 45;
@@ -613,7 +646,7 @@
             // cb16
             // 
             this.cb16.AutoSize = true;
-            this.cb16.Location = new System.Drawing.Point(18, 126);
+            this.cb16.Location = new System.Drawing.Point(7, 121);
             this.cb16.Name = "cb16";
             this.cb16.Size = new System.Drawing.Size(15, 14);
             this.cb16.TabIndex = 46;
@@ -622,7 +655,7 @@
             // cb14
             // 
             this.cb14.AutoSize = true;
-            this.cb14.Location = new System.Drawing.Point(18, 158);
+            this.cb14.Location = new System.Drawing.Point(7, 153);
             this.cb14.Name = "cb14";
             this.cb14.Size = new System.Drawing.Size(15, 14);
             this.cb14.TabIndex = 47;
@@ -631,7 +664,7 @@
             // cb12
             // 
             this.cb12.AutoSize = true;
-            this.cb12.Location = new System.Drawing.Point(18, 189);
+            this.cb12.Location = new System.Drawing.Point(7, 184);
             this.cb12.Name = "cb12";
             this.cb12.Size = new System.Drawing.Size(15, 14);
             this.cb12.TabIndex = 48;
@@ -640,7 +673,7 @@
             // cb10
             // 
             this.cb10.AutoSize = true;
-            this.cb10.Location = new System.Drawing.Point(18, 219);
+            this.cb10.Location = new System.Drawing.Point(7, 214);
             this.cb10.Name = "cb10";
             this.cb10.Size = new System.Drawing.Size(15, 14);
             this.cb10.TabIndex = 49;
@@ -649,7 +682,7 @@
             // cb8
             // 
             this.cb8.AutoSize = true;
-            this.cb8.Location = new System.Drawing.Point(18, 250);
+            this.cb8.Location = new System.Drawing.Point(7, 245);
             this.cb8.Name = "cb8";
             this.cb8.Size = new System.Drawing.Size(15, 14);
             this.cb8.TabIndex = 50;
@@ -658,7 +691,7 @@
             // cb6
             // 
             this.cb6.AutoSize = true;
-            this.cb6.Location = new System.Drawing.Point(18, 281);
+            this.cb6.Location = new System.Drawing.Point(7, 276);
             this.cb6.Name = "cb6";
             this.cb6.Size = new System.Drawing.Size(15, 14);
             this.cb6.TabIndex = 51;
@@ -667,7 +700,7 @@
             // cb4
             // 
             this.cb4.AutoSize = true;
-            this.cb4.Location = new System.Drawing.Point(18, 311);
+            this.cb4.Location = new System.Drawing.Point(7, 306);
             this.cb4.Name = "cb4";
             this.cb4.Size = new System.Drawing.Size(15, 14);
             this.cb4.TabIndex = 52;
@@ -676,7 +709,7 @@
             // cb2
             // 
             this.cb2.AutoSize = true;
-            this.cb2.Location = new System.Drawing.Point(18, 341);
+            this.cb2.Location = new System.Drawing.Point(7, 336);
             this.cb2.Name = "cb2";
             this.cb2.Size = new System.Drawing.Size(15, 14);
             this.cb2.TabIndex = 53;
@@ -685,7 +718,7 @@
             // cb0
             // 
             this.cb0.AutoSize = true;
-            this.cb0.Location = new System.Drawing.Point(18, 371);
+            this.cb0.Location = new System.Drawing.Point(7, 366);
             this.cb0.Name = "cb0";
             this.cb0.Size = new System.Drawing.Size(15, 14);
             this.cb0.TabIndex = 54;
@@ -694,7 +727,7 @@
             // cb21
             // 
             this.cb21.AutoSize = true;
-            this.cb21.Location = new System.Drawing.Point(17, 48);
+            this.cb21.Location = new System.Drawing.Point(6, 43);
             this.cb21.Name = "cb21";
             this.cb21.Size = new System.Drawing.Size(15, 14);
             this.cb21.TabIndex = 55;
@@ -703,7 +736,7 @@
             // cb19
             // 
             this.cb19.AutoSize = true;
-            this.cb19.Location = new System.Drawing.Point(17, 78);
+            this.cb19.Location = new System.Drawing.Point(6, 73);
             this.cb19.Name = "cb19";
             this.cb19.Size = new System.Drawing.Size(15, 14);
             this.cb19.TabIndex = 56;
@@ -712,7 +745,7 @@
             // cb17
             // 
             this.cb17.AutoSize = true;
-            this.cb17.Location = new System.Drawing.Point(18, 110);
+            this.cb17.Location = new System.Drawing.Point(7, 105);
             this.cb17.Name = "cb17";
             this.cb17.Size = new System.Drawing.Size(15, 14);
             this.cb17.TabIndex = 57;
@@ -721,7 +754,7 @@
             // cb15
             // 
             this.cb15.AutoSize = true;
-            this.cb15.Location = new System.Drawing.Point(18, 142);
+            this.cb15.Location = new System.Drawing.Point(7, 137);
             this.cb15.Name = "cb15";
             this.cb15.Size = new System.Drawing.Size(15, 14);
             this.cb15.TabIndex = 58;
@@ -730,7 +763,7 @@
             // cb13
             // 
             this.cb13.AutoSize = true;
-            this.cb13.Location = new System.Drawing.Point(18, 174);
+            this.cb13.Location = new System.Drawing.Point(7, 169);
             this.cb13.Name = "cb13";
             this.cb13.Size = new System.Drawing.Size(15, 14);
             this.cb13.TabIndex = 59;
@@ -739,7 +772,7 @@
             // cb11
             // 
             this.cb11.AutoSize = true;
-            this.cb11.Location = new System.Drawing.Point(18, 204);
+            this.cb11.Location = new System.Drawing.Point(7, 199);
             this.cb11.Name = "cb11";
             this.cb11.Size = new System.Drawing.Size(15, 14);
             this.cb11.TabIndex = 60;
@@ -748,7 +781,7 @@
             // cb9
             // 
             this.cb9.AutoSize = true;
-            this.cb9.Location = new System.Drawing.Point(18, 234);
+            this.cb9.Location = new System.Drawing.Point(7, 229);
             this.cb9.Name = "cb9";
             this.cb9.Size = new System.Drawing.Size(15, 14);
             this.cb9.TabIndex = 61;
@@ -757,7 +790,7 @@
             // cb7
             // 
             this.cb7.AutoSize = true;
-            this.cb7.Location = new System.Drawing.Point(18, 266);
+            this.cb7.Location = new System.Drawing.Point(7, 261);
             this.cb7.Name = "cb7";
             this.cb7.Size = new System.Drawing.Size(15, 14);
             this.cb7.TabIndex = 62;
@@ -766,7 +799,7 @@
             // cb5
             // 
             this.cb5.AutoSize = true;
-            this.cb5.Location = new System.Drawing.Point(18, 296);
+            this.cb5.Location = new System.Drawing.Point(7, 291);
             this.cb5.Name = "cb5";
             this.cb5.Size = new System.Drawing.Size(15, 14);
             this.cb5.TabIndex = 63;
@@ -775,80 +808,11 @@
             // cb3
             // 
             this.cb3.AutoSize = true;
-            this.cb3.Location = new System.Drawing.Point(18, 326);
+            this.cb3.Location = new System.Drawing.Point(7, 321);
             this.cb3.Name = "cb3";
             this.cb3.Size = new System.Drawing.Size(15, 14);
             this.cb3.TabIndex = 64;
             this.cb3.UseVisualStyleBackColor = true;
-            // 
-            // lblCorrect
-            // 
-            this.lblCorrect.AutoSize = true;
-            this.lblCorrect.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCorrect.Location = new System.Drawing.Point(13, 16);
-            this.lblCorrect.Name = "lblCorrect";
-            this.lblCorrect.Size = new System.Drawing.Size(95, 23);
-            this.lblCorrect.TabIndex = 66;
-            this.lblCorrect.Text = "Attempts";
-            // 
-            // lblTotal
-            // 
-            this.lblTotal.AutoSize = true;
-            this.lblTotal.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotal.Location = new System.Drawing.Point(13, 52);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(79, 23);
-            this.lblTotal.TabIndex = 67;
-            this.lblTotal.Text = "Correct";
-            // 
-            // lblScore
-            // 
-            this.lblScore.AutoSize = true;
-            this.lblScore.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScore.Location = new System.Drawing.Point(13, 90);
-            this.lblScore.Name = "lblScore";
-            this.lblScore.Size = new System.Drawing.Size(64, 23);
-            this.lblScore.TabIndex = 68;
-            this.lblScore.Text = "Score";
-            // 
-            // txtCorrect
-            // 
-            this.txtCorrect.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCorrect.Location = new System.Drawing.Point(113, 13);
-            this.txtCorrect.Name = "txtCorrect";
-            this.txtCorrect.Size = new System.Drawing.Size(74, 31);
-            this.txtCorrect.TabIndex = 69;
-            this.txtCorrect.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtScore
-            // 
-            this.txtScore.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtScore.Location = new System.Drawing.Point(113, 86);
-            this.txtScore.Name = "txtScore";
-            this.txtScore.Size = new System.Drawing.Size(74, 31);
-            this.txtScore.TabIndex = 70;
-            this.txtScore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtTotal
-            // 
-            this.txtTotal.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotal.Location = new System.Drawing.Point(113, 49);
-            this.txtTotal.Name = "txtTotal";
-            this.txtTotal.Size = new System.Drawing.Size(74, 31);
-            this.txtTotal.TabIndex = 71;
-            this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // btnTimer
-            // 
-            this.btnTimer.BackColor = System.Drawing.Color.Gray;
-            this.btnTimer.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTimer.Location = new System.Drawing.Point(759, 36);
-            this.btnTimer.Name = "btnTimer";
-            this.btnTimer.Size = new System.Drawing.Size(75, 32);
-            this.btnTimer.TabIndex = 72;
-            this.btnTimer.Text = "Practice";
-            this.btnTimer.UseVisualStyleBackColor = false;
-            this.btnTimer.Click += new System.EventHandler(this.btnTimer_Click);
             // 
             // Timer
             // 
@@ -858,7 +822,7 @@
             // cb29
             // 
             this.cb29.AutoSize = true;
-            this.cb29.Location = new System.Drawing.Point(18, 587);
+            this.cb29.Location = new System.Drawing.Point(7, 582);
             this.cb29.Name = "cb29";
             this.cb29.Size = new System.Drawing.Size(15, 14);
             this.cb29.TabIndex = 117;
@@ -866,9 +830,10 @@
             // 
             // N29
             // 
+            this.N29.BackColor = System.Drawing.Color.Transparent;
             this.N29.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N29.Image = ((System.Drawing.Image)(resources.GetObject("N29.Image")));
-            this.N29.Location = new System.Drawing.Point(382, 624);
+            this.N29.Location = new System.Drawing.Point(302, 612);
             this.N29.Name = "N29";
             this.N29.Size = new System.Drawing.Size(29, 27);
             this.N29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -878,7 +843,7 @@
             // cb26
             // 
             this.cb26.AutoSize = true;
-            this.cb26.Location = new System.Drawing.Point(18, 632);
+            this.cb26.Location = new System.Drawing.Point(7, 627);
             this.cb26.Name = "cb26";
             this.cb26.Size = new System.Drawing.Size(15, 14);
             this.cb26.TabIndex = 130;
@@ -887,7 +852,7 @@
             // cb28
             // 
             this.cb28.AutoSize = true;
-            this.cb28.Location = new System.Drawing.Point(18, 602);
+            this.cb28.Location = new System.Drawing.Point(7, 597);
             this.cb28.Name = "cb28";
             this.cb28.Size = new System.Drawing.Size(15, 14);
             this.cb28.TabIndex = 129;
@@ -896,7 +861,7 @@
             // cb30
             // 
             this.cb30.AutoSize = true;
-            this.cb30.Location = new System.Drawing.Point(18, 572);
+            this.cb30.Location = new System.Drawing.Point(7, 567);
             this.cb30.Name = "cb30";
             this.cb30.Size = new System.Drawing.Size(15, 14);
             this.cb30.TabIndex = 128;
@@ -905,7 +870,7 @@
             // cb32
             // 
             this.cb32.AutoSize = true;
-            this.cb32.Location = new System.Drawing.Point(18, 540);
+            this.cb32.Location = new System.Drawing.Point(7, 535);
             this.cb32.Name = "cb32";
             this.cb32.Size = new System.Drawing.Size(15, 14);
             this.cb32.TabIndex = 127;
@@ -914,7 +879,7 @@
             // cb34
             // 
             this.cb34.AutoSize = true;
-            this.cb34.Location = new System.Drawing.Point(18, 510);
+            this.cb34.Location = new System.Drawing.Point(7, 505);
             this.cb34.Name = "cb34";
             this.cb34.Size = new System.Drawing.Size(15, 14);
             this.cb34.TabIndex = 126;
@@ -923,7 +888,7 @@
             // cb36
             // 
             this.cb36.AutoSize = true;
-            this.cb36.Location = new System.Drawing.Point(18, 480);
+            this.cb36.Location = new System.Drawing.Point(7, 475);
             this.cb36.Name = "cb36";
             this.cb36.Size = new System.Drawing.Size(15, 14);
             this.cb36.TabIndex = 125;
@@ -932,7 +897,7 @@
             // cb38
             // 
             this.cb38.AutoSize = true;
-            this.cb38.Location = new System.Drawing.Point(18, 448);
+            this.cb38.Location = new System.Drawing.Point(7, 443);
             this.cb38.Name = "cb38";
             this.cb38.Size = new System.Drawing.Size(15, 14);
             this.cb38.TabIndex = 124;
@@ -941,7 +906,7 @@
             // cb40
             // 
             this.cb40.AutoSize = true;
-            this.cb40.Location = new System.Drawing.Point(18, 416);
+            this.cb40.Location = new System.Drawing.Point(7, 411);
             this.cb40.Name = "cb40";
             this.cb40.Size = new System.Drawing.Size(15, 14);
             this.cb40.TabIndex = 123;
@@ -950,7 +915,7 @@
             // cb23
             // 
             this.cb23.AutoSize = true;
-            this.cb23.Location = new System.Drawing.Point(18, 677);
+            this.cb23.Location = new System.Drawing.Point(7, 672);
             this.cb23.Name = "cb23";
             this.cb23.Size = new System.Drawing.Size(15, 14);
             this.cb23.TabIndex = 120;
@@ -959,7 +924,7 @@
             // cb25
             // 
             this.cb25.AutoSize = true;
-            this.cb25.Location = new System.Drawing.Point(18, 647);
+            this.cb25.Location = new System.Drawing.Point(7, 642);
             this.cb25.Name = "cb25";
             this.cb25.Size = new System.Drawing.Size(15, 14);
             this.cb25.TabIndex = 119;
@@ -968,7 +933,7 @@
             // cb27
             // 
             this.cb27.AutoSize = true;
-            this.cb27.Location = new System.Drawing.Point(18, 617);
+            this.cb27.Location = new System.Drawing.Point(7, 612);
             this.cb27.Name = "cb27";
             this.cb27.Size = new System.Drawing.Size(15, 14);
             this.cb27.TabIndex = 118;
@@ -977,7 +942,7 @@
             // cb31
             // 
             this.cb31.AutoSize = true;
-            this.cb31.Location = new System.Drawing.Point(18, 556);
+            this.cb31.Location = new System.Drawing.Point(7, 551);
             this.cb31.Name = "cb31";
             this.cb31.Size = new System.Drawing.Size(15, 14);
             this.cb31.TabIndex = 116;
@@ -986,7 +951,7 @@
             // cb33
             // 
             this.cb33.AutoSize = true;
-            this.cb33.Location = new System.Drawing.Point(18, 525);
+            this.cb33.Location = new System.Drawing.Point(7, 520);
             this.cb33.Name = "cb33";
             this.cb33.Size = new System.Drawing.Size(15, 14);
             this.cb33.TabIndex = 115;
@@ -995,7 +960,7 @@
             // cb35
             // 
             this.cb35.AutoSize = true;
-            this.cb35.Location = new System.Drawing.Point(18, 495);
+            this.cb35.Location = new System.Drawing.Point(7, 490);
             this.cb35.Name = "cb35";
             this.cb35.Size = new System.Drawing.Size(15, 14);
             this.cb35.TabIndex = 114;
@@ -1004,7 +969,7 @@
             // cb37
             // 
             this.cb37.AutoSize = true;
-            this.cb37.Location = new System.Drawing.Point(18, 464);
+            this.cb37.Location = new System.Drawing.Point(7, 459);
             this.cb37.Name = "cb37";
             this.cb37.Size = new System.Drawing.Size(15, 14);
             this.cb37.TabIndex = 113;
@@ -1013,7 +978,7 @@
             // cb39
             // 
             this.cb39.AutoSize = true;
-            this.cb39.Location = new System.Drawing.Point(18, 432);
+            this.cb39.Location = new System.Drawing.Point(7, 427);
             this.cb39.Name = "cb39";
             this.cb39.Size = new System.Drawing.Size(15, 14);
             this.cb39.TabIndex = 112;
@@ -1022,7 +987,7 @@
             // cb41
             // 
             this.cb41.AutoSize = true;
-            this.cb41.Location = new System.Drawing.Point(18, 400);
+            this.cb41.Location = new System.Drawing.Point(7, 395);
             this.cb41.Name = "cb41";
             this.cb41.Size = new System.Drawing.Size(15, 14);
             this.cb41.TabIndex = 111;
@@ -1031,7 +996,7 @@
             // cb24
             // 
             this.cb24.AutoSize = true;
-            this.cb24.Location = new System.Drawing.Point(18, 662);
+            this.cb24.Location = new System.Drawing.Point(7, 657);
             this.cb24.Name = "cb24";
             this.cb24.Size = new System.Drawing.Size(15, 14);
             this.cb24.TabIndex = 108;
@@ -1039,9 +1004,10 @@
             // 
             // N24
             // 
+            this.N24.BackColor = System.Drawing.Color.Transparent;
             this.N24.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N24.Image = ((System.Drawing.Image)(resources.GetObject("N24.Image")));
-            this.N24.Location = new System.Drawing.Point(382, 700);
+            this.N24.Location = new System.Drawing.Point(302, 688);
             this.N24.Name = "N24";
             this.N24.Size = new System.Drawing.Size(29, 27);
             this.N24.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1050,9 +1016,10 @@
             // 
             // N26
             // 
+            this.N26.BackColor = System.Drawing.Color.Transparent;
             this.N26.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N26.Image = ((System.Drawing.Image)(resources.GetObject("N26.Image")));
-            this.N26.Location = new System.Drawing.Point(381, 669);
+            this.N26.Location = new System.Drawing.Point(301, 657);
             this.N26.Name = "N26";
             this.N26.Size = new System.Drawing.Size(29, 27);
             this.N26.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1061,9 +1028,10 @@
             // 
             // N28
             // 
+            this.N28.BackColor = System.Drawing.Color.Transparent;
             this.N28.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N28.Image = ((System.Drawing.Image)(resources.GetObject("N28.Image")));
-            this.N28.Location = new System.Drawing.Point(381, 639);
+            this.N28.Location = new System.Drawing.Point(301, 627);
             this.N28.Name = "N28";
             this.N28.Size = new System.Drawing.Size(29, 27);
             this.N28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1072,9 +1040,10 @@
             // 
             // N30
             // 
+            this.N30.BackColor = System.Drawing.Color.Transparent;
             this.N30.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N30.Image = ((System.Drawing.Image)(resources.GetObject("N30.Image")));
-            this.N30.Location = new System.Drawing.Point(381, 609);
+            this.N30.Location = new System.Drawing.Point(301, 597);
             this.N30.Name = "N30";
             this.N30.Size = new System.Drawing.Size(29, 27);
             this.N30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1083,9 +1052,10 @@
             // 
             // N32
             // 
+            this.N32.BackColor = System.Drawing.Color.Transparent;
             this.N32.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N32.Image = ((System.Drawing.Image)(resources.GetObject("N32.Image")));
-            this.N32.Location = new System.Drawing.Point(381, 578);
+            this.N32.Location = new System.Drawing.Point(301, 566);
             this.N32.Name = "N32";
             this.N32.Size = new System.Drawing.Size(29, 27);
             this.N32.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1094,9 +1064,10 @@
             // 
             // N34
             // 
+            this.N34.BackColor = System.Drawing.Color.Transparent;
             this.N34.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N34.Image = ((System.Drawing.Image)(resources.GetObject("N34.Image")));
-            this.N34.Location = new System.Drawing.Point(382, 547);
+            this.N34.Location = new System.Drawing.Point(302, 535);
             this.N34.Name = "N34";
             this.N34.Size = new System.Drawing.Size(29, 27);
             this.N34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1105,9 +1076,10 @@
             // 
             // N36
             // 
+            this.N36.BackColor = System.Drawing.Color.Transparent;
             this.N36.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N36.Image = ((System.Drawing.Image)(resources.GetObject("N36.Image")));
-            this.N36.Location = new System.Drawing.Point(382, 516);
+            this.N36.Location = new System.Drawing.Point(302, 504);
             this.N36.Name = "N36";
             this.N36.Size = new System.Drawing.Size(29, 27);
             this.N36.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1116,9 +1088,10 @@
             // 
             // N38
             // 
+            this.N38.BackColor = System.Drawing.Color.Transparent;
             this.N38.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N38.Image = ((System.Drawing.Image)(resources.GetObject("N38.Image")));
-            this.N38.Location = new System.Drawing.Point(382, 487);
+            this.N38.Location = new System.Drawing.Point(302, 475);
             this.N38.Name = "N38";
             this.N38.Size = new System.Drawing.Size(29, 27);
             this.N38.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1127,9 +1100,10 @@
             // 
             // N40
             // 
+            this.N40.BackColor = System.Drawing.Color.Transparent;
             this.N40.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N40.Image = ((System.Drawing.Image)(resources.GetObject("N40.Image")));
-            this.N40.Location = new System.Drawing.Point(382, 456);
+            this.N40.Location = new System.Drawing.Point(302, 444);
             this.N40.Name = "N40";
             this.N40.Size = new System.Drawing.Size(29, 27);
             this.N40.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1138,9 +1112,10 @@
             // 
             // N23
             // 
+            this.N23.BackColor = System.Drawing.Color.Transparent;
             this.N23.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N23.Image = ((System.Drawing.Image)(resources.GetObject("N23.Image")));
-            this.N23.Location = new System.Drawing.Point(382, 716);
+            this.N23.Location = new System.Drawing.Point(302, 704);
             this.N23.Name = "N23";
             this.N23.Size = new System.Drawing.Size(29, 27);
             this.N23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1149,9 +1124,10 @@
             // 
             // N27
             // 
+            this.N27.BackColor = System.Drawing.Color.Transparent;
             this.N27.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N27.Image = ((System.Drawing.Image)(resources.GetObject("N27.Image")));
-            this.N27.Location = new System.Drawing.Point(383, 655);
+            this.N27.Location = new System.Drawing.Point(303, 643);
             this.N27.Name = "N27";
             this.N27.Size = new System.Drawing.Size(29, 27);
             this.N27.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1160,9 +1136,10 @@
             // 
             // N25
             // 
+            this.N25.BackColor = System.Drawing.Color.Transparent;
             this.N25.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N25.Image = ((System.Drawing.Image)(resources.GetObject("N25.Image")));
-            this.N25.Location = new System.Drawing.Point(382, 686);
+            this.N25.Location = new System.Drawing.Point(302, 674);
             this.N25.Name = "N25";
             this.N25.Size = new System.Drawing.Size(29, 27);
             this.N25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1171,9 +1148,10 @@
             // 
             // N31
             // 
+            this.N31.BackColor = System.Drawing.Color.Transparent;
             this.N31.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N31.Image = ((System.Drawing.Image)(resources.GetObject("N31.Image")));
-            this.N31.Location = new System.Drawing.Point(381, 593);
+            this.N31.Location = new System.Drawing.Point(301, 581);
             this.N31.Name = "N31";
             this.N31.Size = new System.Drawing.Size(29, 27);
             this.N31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1182,9 +1160,10 @@
             // 
             // N33
             // 
+            this.N33.BackColor = System.Drawing.Color.Transparent;
             this.N33.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N33.Image = ((System.Drawing.Image)(resources.GetObject("N33.Image")));
-            this.N33.Location = new System.Drawing.Point(381, 562);
+            this.N33.Location = new System.Drawing.Point(301, 550);
             this.N33.Name = "N33";
             this.N33.Size = new System.Drawing.Size(29, 27);
             this.N33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1193,9 +1172,10 @@
             // 
             // N35
             // 
+            this.N35.BackColor = System.Drawing.Color.Transparent;
             this.N35.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N35.Image = ((System.Drawing.Image)(resources.GetObject("N35.Image")));
-            this.N35.Location = new System.Drawing.Point(381, 532);
+            this.N35.Location = new System.Drawing.Point(301, 520);
             this.N35.Name = "N35";
             this.N35.Size = new System.Drawing.Size(29, 27);
             this.N35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1204,9 +1184,10 @@
             // 
             // N37
             // 
+            this.N37.BackColor = System.Drawing.Color.Transparent;
             this.N37.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N37.Image = ((System.Drawing.Image)(resources.GetObject("N37.Image")));
-            this.N37.Location = new System.Drawing.Point(382, 502);
+            this.N37.Location = new System.Drawing.Point(302, 490);
             this.N37.Name = "N37";
             this.N37.Size = new System.Drawing.Size(29, 27);
             this.N37.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1215,9 +1196,10 @@
             // 
             // N39
             // 
+            this.N39.BackColor = System.Drawing.Color.Transparent;
             this.N39.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N39.Image = ((System.Drawing.Image)(resources.GetObject("N39.Image")));
-            this.N39.Location = new System.Drawing.Point(382, 470);
+            this.N39.Location = new System.Drawing.Point(302, 458);
             this.N39.Name = "N39";
             this.N39.Size = new System.Drawing.Size(29, 27);
             this.N39.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1226,9 +1208,10 @@
             // 
             // N41
             // 
+            this.N41.BackColor = System.Drawing.Color.Transparent;
             this.N41.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.N41.Image = ((System.Drawing.Image)(resources.GetObject("N41.Image")));
-            this.N41.Location = new System.Drawing.Point(381, 441);
+            this.N41.Location = new System.Drawing.Point(301, 429);
             this.N41.Name = "N41";
             this.N41.Size = new System.Drawing.Size(29, 27);
             this.N41.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1238,7 +1221,8 @@
             // lblBC4
             // 
             this.lblBC4.AutoSize = true;
-            this.lblBC4.Location = new System.Drawing.Point(356, 462);
+            this.lblBC4.BackColor = System.Drawing.Color.Transparent;
+            this.lblBC4.Location = new System.Drawing.Point(276, 450);
             this.lblBC4.Name = "lblBC4";
             this.lblBC4.Size = new System.Drawing.Size(91, 13);
             this.lblBC4.TabIndex = 83;
@@ -1247,7 +1231,8 @@
             // lblBC2
             // 
             this.lblBC2.AutoSize = true;
-            this.lblBC2.Location = new System.Drawing.Point(358, 676);
+            this.lblBC2.BackColor = System.Drawing.Color.Transparent;
+            this.lblBC2.Location = new System.Drawing.Point(278, 664);
             this.lblBC2.Name = "lblBC2";
             this.lblBC2.Size = new System.Drawing.Size(91, 13);
             this.lblBC2.TabIndex = 82;
@@ -1256,7 +1241,8 @@
             // lblBA2
             // 
             this.lblBA2.AutoSize = true;
-            this.lblBA2.Location = new System.Drawing.Point(358, 707);
+            this.lblBA2.BackColor = System.Drawing.Color.Transparent;
+            this.lblBA2.Location = new System.Drawing.Point(278, 695);
             this.lblBA2.Name = "lblBA2";
             this.lblBA2.Size = new System.Drawing.Size(91, 13);
             this.lblBA2.TabIndex = 81;
@@ -1265,7 +1251,8 @@
             // lblBE2
             // 
             this.lblBE2.AutoSize = true;
-            this.lblBE2.Location = new System.Drawing.Point(357, 646);
+            this.lblBE2.BackColor = System.Drawing.Color.Transparent;
+            this.lblBE2.Location = new System.Drawing.Point(277, 634);
             this.lblBE2.Name = "lblBE2";
             this.lblBE2.Size = new System.Drawing.Size(91, 13);
             this.lblBE2.TabIndex = 80;
@@ -1275,9 +1262,9 @@
             // 
             this.bassClef.BackColor = System.Drawing.Color.Transparent;
             this.bassClef.Image = ((System.Drawing.Image)(resources.GetObject("bassClef.Image")));
-            this.bassClef.Location = new System.Drawing.Point(80, 512);
+            this.bassClef.Location = new System.Drawing.Point(78, 481);
             this.bassClef.Name = "bassClef";
-            this.bassClef.Size = new System.Drawing.Size(75, 99);
+            this.bassClef.Size = new System.Drawing.Size(107, 134);
             this.bassClef.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.bassClef.TabIndex = 79;
             this.bassClef.TabStop = false;
@@ -1285,7 +1272,8 @@
             // lblBF4
             // 
             this.lblBF4.AutoSize = true;
-            this.lblBF4.Location = new System.Drawing.Point(195, 522);
+            this.lblBF4.BackColor = System.Drawing.Color.Transparent;
+            this.lblBF4.Location = new System.Drawing.Point(91, 510);
             this.lblBF4.Name = "lblBF4";
             this.lblBF4.Size = new System.Drawing.Size(508, 13);
             this.lblBF4.TabIndex = 77;
@@ -1296,7 +1284,8 @@
             // lblBD3
             // 
             this.lblBD3.AutoSize = true;
-            this.lblBD3.Location = new System.Drawing.Point(194, 552);
+            this.lblBD3.BackColor = System.Drawing.Color.Transparent;
+            this.lblBD3.Location = new System.Drawing.Point(90, 540);
             this.lblBD3.Name = "lblBD3";
             this.lblBD3.Size = new System.Drawing.Size(508, 13);
             this.lblBD3.TabIndex = 76;
@@ -1307,7 +1296,8 @@
             // lblBG3
             // 
             this.lblBG3.AutoSize = true;
-            this.lblBG3.Location = new System.Drawing.Point(194, 614);
+            this.lblBG3.BackColor = System.Drawing.Color.Transparent;
+            this.lblBG3.Location = new System.Drawing.Point(90, 602);
             this.lblBG3.Name = "lblBG3";
             this.lblBG3.Size = new System.Drawing.Size(508, 13);
             this.lblBG3.TabIndex = 75;
@@ -1318,7 +1308,8 @@
             // lblBB3
             // 
             this.lblBB3.AutoSize = true;
-            this.lblBB3.Location = new System.Drawing.Point(195, 582);
+            this.lblBB3.BackColor = System.Drawing.Color.Transparent;
+            this.lblBB3.Location = new System.Drawing.Point(91, 570);
             this.lblBB3.Name = "lblBB3";
             this.lblBB3.Size = new System.Drawing.Size(508, 13);
             this.lblBB3.TabIndex = 74;
@@ -1329,67 +1320,14 @@
             // lblBA4
             // 
             this.lblBA4.AutoSize = true;
-            this.lblBA4.Location = new System.Drawing.Point(195, 490);
+            this.lblBA4.BackColor = System.Drawing.Color.Transparent;
+            this.lblBA4.Location = new System.Drawing.Point(91, 478);
             this.lblBA4.Name = "lblBA4";
             this.lblBA4.Size = new System.Drawing.Size(508, 13);
             this.lblBA4.TabIndex = 73;
             this.lblBA4.Text = "---------------------------------------------------------------------------------" +
     "--------------------------------------------------------------------------------" +
     "------";
-            // 
-            // btnReset
-            // 
-            this.btnReset.BackColor = System.Drawing.Color.Gray;
-            this.btnReset.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.Location = new System.Drawing.Point(840, 36);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 32);
-            this.btnReset.TabIndex = 131;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = false;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // pnScore
-            // 
-            this.pnScore.BackColor = System.Drawing.Color.Transparent;
-            this.pnScore.Controls.Add(this.lblCorrect);
-            this.pnScore.Controls.Add(this.txtCorrect);
-            this.pnScore.Controls.Add(this.lblTotal);
-            this.pnScore.Controls.Add(this.txtTotal);
-            this.pnScore.Controls.Add(this.txtScore);
-            this.pnScore.Controls.Add(this.lblScore);
-            this.pnScore.Location = new System.Drawing.Point(727, 118);
-            this.pnScore.Name = "pnScore";
-            this.pnScore.Size = new System.Drawing.Size(200, 142);
-            this.pnScore.TabIndex = 132;
-            // 
-            // txtSetInterval
-            // 
-            this.txtSetInterval.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSetInterval.Location = new System.Drawing.Point(840, 80);
-            this.txtSetInterval.Name = "txtSetInterval";
-            this.txtSetInterval.Size = new System.Drawing.Size(74, 23);
-            this.txtSetInterval.TabIndex = 134;
-            // 
-            // txtTimer1
-            // 
-            this.txtTimer1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTimer1.Location = new System.Drawing.Point(933, 35);
-            this.txtTimer1.Name = "txtTimer1";
-            this.txtTimer1.Size = new System.Drawing.Size(38, 31);
-            this.txtTimer1.TabIndex = 135;
-            // 
-            // cbInterval
-            // 
-            this.cbInterval.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbInterval.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbInterval.Location = new System.Drawing.Point(759, 76);
-            this.cbInterval.Name = "cbInterval";
-            this.cbInterval.Size = new System.Drawing.Size(75, 30);
-            this.cbInterval.TabIndex = 136;
-            this.cbInterval.Text = "Interval";
-            this.cbInterval.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cbInterval.UseVisualStyleBackColor = true;
             // 
             // pnCheckBoxes
             // 
@@ -1436,10 +1374,151 @@
             this.pnCheckBoxes.Controls.Add(this.cb6);
             this.pnCheckBoxes.Controls.Add(this.cb41);
             this.pnCheckBoxes.Controls.Add(this.cb24);
-            this.pnCheckBoxes.Location = new System.Drawing.Point(160, 41);
+            this.pnCheckBoxes.Location = new System.Drawing.Point(599, 36);
             this.pnCheckBoxes.Name = "pnCheckBoxes";
-            this.pnCheckBoxes.Size = new System.Drawing.Size(46, 702);
+            this.pnCheckBoxes.Size = new System.Drawing.Size(35, 701);
             this.pnCheckBoxes.TabIndex = 137;
+            // 
+            // cbFocus
+            // 
+            this.cbFocus.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbFocus.BackColor = System.Drawing.Color.Black;
+            this.cbFocus.Enabled = false;
+            this.cbFocus.ForeColor = System.Drawing.Color.White;
+            this.cbFocus.Location = new System.Drawing.Point(98, 71);
+            this.cbFocus.Name = "cbFocus";
+            this.cbFocus.Size = new System.Drawing.Size(75, 33);
+            this.cbFocus.TabIndex = 143;
+            this.cbFocus.TabStop = false;
+            this.cbFocus.Text = "Learn";
+            this.cbFocus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.cbFocus.UseVisualStyleBackColor = false;
+            this.cbFocus.CheckedChanged += new System.EventHandler(this.cbFocus_CheckedChanged);
+            // 
+            // lblTimerDisplay
+            // 
+            this.lblTimerDisplay.AutoSize = true;
+            this.lblTimerDisplay.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimerDisplay.Font = new System.Drawing.Font("Verdana", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimerDisplay.Location = new System.Drawing.Point(482, 54);
+            this.lblTimerDisplay.Name = "lblTimerDisplay";
+            this.lblTimerDisplay.Size = new System.Drawing.Size(0, 65);
+            this.lblTimerDisplay.TabIndex = 141;
+            // 
+            // btnResetNew
+            // 
+            this.btnResetNew.BackColor = System.Drawing.Color.Black;
+            this.btnResetNew.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResetNew.ForeColor = System.Drawing.Color.White;
+            this.btnResetNew.Location = new System.Drawing.Point(179, 71);
+            this.btnResetNew.Name = "btnResetNew";
+            this.btnResetNew.Size = new System.Drawing.Size(75, 33);
+            this.btnResetNew.TabIndex = 139;
+            this.btnResetNew.TabStop = false;
+            this.btnResetNew.Text = "Reset";
+            this.btnResetNew.UseVisualStyleBackColor = false;
+            this.btnResetNew.Click += new System.EventHandler(this.btnResetNew_Click);
+            // 
+            // btnPractice
+            // 
+            this.btnPractice.BackColor = System.Drawing.Color.Black;
+            this.btnPractice.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPractice.ForeColor = System.Drawing.Color.White;
+            this.btnPractice.Location = new System.Drawing.Point(17, 71);
+            this.btnPractice.Name = "btnPractice";
+            this.btnPractice.Size = new System.Drawing.Size(75, 33);
+            this.btnPractice.TabIndex = 138;
+            this.btnPractice.TabStop = false;
+            this.btnPractice.Text = "Start";
+            this.btnPractice.UseVisualStyleBackColor = false;
+            this.btnPractice.Click += new System.EventHandler(this.btnPractice_Click);
+            // 
+            // pnlStatistics
+            // 
+            this.pnlStatistics.BackColor = System.Drawing.Color.Transparent;
+            this.pnlStatistics.Controls.Add(this.lblAccuracyDisplay);
+            this.pnlStatistics.Controls.Add(this.lblTotalDisplay);
+            this.pnlStatistics.Controls.Add(this.lblTotalPoints);
+            this.pnlStatistics.Controls.Add(this.lblAccuracy);
+            this.pnlStatistics.Location = new System.Drawing.Point(387, 366);
+            this.pnlStatistics.Name = "pnlStatistics";
+            this.pnlStatistics.Size = new System.Drawing.Size(188, 97);
+            this.pnlStatistics.TabIndex = 140;
+            // 
+            // lblAccuracyDisplay
+            // 
+            this.lblAccuracyDisplay.AutoSize = true;
+            this.lblAccuracyDisplay.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAccuracyDisplay.Location = new System.Drawing.Point(127, 55);
+            this.lblAccuracyDisplay.Name = "lblAccuracyDisplay";
+            this.lblAccuracyDisplay.Size = new System.Drawing.Size(0, 23);
+            this.lblAccuracyDisplay.TabIndex = 11;
+            // 
+            // lblTotalDisplay
+            // 
+            this.lblTotalDisplay.AutoSize = true;
+            this.lblTotalDisplay.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalDisplay.Location = new System.Drawing.Point(128, 16);
+            this.lblTotalDisplay.Name = "lblTotalDisplay";
+            this.lblTotalDisplay.Size = new System.Drawing.Size(0, 23);
+            this.lblTotalDisplay.TabIndex = 12;
+            // 
+            // lblTotalPoints
+            // 
+            this.lblTotalPoints.AutoSize = true;
+            this.lblTotalPoints.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalPoints.Location = new System.Drawing.Point(6, 16);
+            this.lblTotalPoints.Name = "lblTotalPoints";
+            this.lblTotalPoints.Size = new System.Drawing.Size(112, 23);
+            this.lblTotalPoints.TabIndex = 6;
+            this.lblTotalPoints.Text = "Points     :";
+            // 
+            // lblAccuracy
+            // 
+            this.lblAccuracy.AutoSize = true;
+            this.lblAccuracy.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAccuracy.Location = new System.Drawing.Point(6, 55);
+            this.lblAccuracy.Name = "lblAccuracy";
+            this.lblAccuracy.Size = new System.Drawing.Size(111, 23);
+            this.lblAccuracy.TabIndex = 5;
+            this.lblAccuracy.Text = "Accuracy :";
+            // 
+            // btnSave
+            // 
+            this.btnSave.BackColor = System.Drawing.Color.Black;
+            this.btnSave.ForeColor = System.Drawing.Color.White;
+            this.btnSave.Location = new System.Drawing.Point(141, 21);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(44, 23);
+            this.btnSave.TabIndex = 147;
+            this.btnSave.TabStop = false;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = false;
+            // 
+            // cbPreset
+            // 
+            this.cbPreset.BackColor = System.Drawing.Color.White;
+            this.cbPreset.ForeColor = System.Drawing.Color.Black;
+            this.cbPreset.FormattingEnabled = true;
+            this.cbPreset.Location = new System.Drawing.Point(17, 23);
+            this.cbPreset.Name = "cbPreset";
+            this.cbPreset.Size = new System.Drawing.Size(118, 21);
+            this.cbPreset.TabIndex = 146;
+            this.cbPreset.TabStop = false;
+            // 
+            // lblPointsDisplay
+            // 
+            this.lblPointsDisplay.AutoSize = true;
+            this.lblPointsDisplay.BackColor = System.Drawing.Color.Transparent;
+            this.lblPointsDisplay.Font = new System.Drawing.Font("Verdana", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPointsDisplay.Location = new System.Drawing.Point(522, 320);
+            this.lblPointsDisplay.Name = "lblPointsDisplay";
+            this.lblPointsDisplay.Size = new System.Drawing.Size(0, 36);
+            this.lblPointsDisplay.TabIndex = 148;
+            // 
+            // FadeTimer
+            // 
+            this.FadeTimer.Tick += new System.EventHandler(this.FadeTimer_Tick);
             // 
             // Form1
             // 
@@ -1449,12 +1528,18 @@
             this.BackColor = System.Drawing.Color.Wheat;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1027, 800);
-            this.Controls.Add(this.cbInterval);
-            this.Controls.Add(this.txtTimer1);
-            this.Controls.Add(this.txtSetInterval);
-            this.Controls.Add(this.pnScore);
-            this.Controls.Add(this.btnReset);
+            this.ClientSize = new System.Drawing.Size(742, 765);
+            this.Controls.Add(this.pnCheckBoxes);
+            this.Controls.Add(this.trebleClef);
+            this.Controls.Add(this.N5);
+            this.Controls.Add(this.lblPointsDisplay);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.cbPreset);
+            this.Controls.Add(this.cbFocus);
+            this.Controls.Add(this.lblTimerDisplay);
+            this.Controls.Add(this.btnResetNew);
+            this.Controls.Add(this.btnPractice);
+            this.Controls.Add(this.pnlStatistics);
             this.Controls.Add(this.N29);
             this.Controls.Add(this.N24);
             this.Controls.Add(this.N26);
@@ -1483,10 +1568,8 @@
             this.Controls.Add(this.lblBB3);
             this.Controls.Add(this.lblBA4);
             this.Controls.Add(this.N6);
-            this.Controls.Add(this.btnTimer);
             this.Controls.Add(this.N1);
             this.Controls.Add(this.N3);
-            this.Controls.Add(this.N5);
             this.Controls.Add(this.N7);
             this.Controls.Add(this.N9);
             this.Controls.Add(this.N11);
@@ -1512,7 +1595,6 @@
             this.Controls.Add(this.lblA4);
             this.Controls.Add(this.lblF4);
             this.Controls.Add(this.lblC4);
-            this.Controls.Add(this.trebleClef);
             this.Controls.Add(this.lblD4);
             this.Controls.Add(this.lblF5);
             this.Controls.Add(this.N28);
@@ -1520,12 +1602,10 @@
             this.Controls.Add(this.lblE4);
             this.Controls.Add(this.lblG4);
             this.Controls.Add(this.lblB4);
-            this.Controls.Add(this.pnCheckBoxes);
             this.DoubleBuffered = true;
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "b";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Text = "Noterize";
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.N6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trebleClef)).EndInit();
@@ -1571,10 +1651,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.N39)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.N41)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bassClef)).EndInit();
-            this.pnScore.ResumeLayout(false);
-            this.pnScore.PerformLayout();
             this.pnCheckBoxes.ResumeLayout(false);
             this.pnCheckBoxes.PerformLayout();
+            this.pnlStatistics.ResumeLayout(false);
+            this.pnlStatistics.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1640,13 +1720,6 @@
         private System.Windows.Forms.CheckBox cb7;
         private System.Windows.Forms.CheckBox cb5;
         private System.Windows.Forms.CheckBox cb3;
-        private System.Windows.Forms.Label lblCorrect;
-        private System.Windows.Forms.Label lblTotal;
-        private System.Windows.Forms.Label lblScore;
-        private System.Windows.Forms.TextBox txtCorrect;
-        private System.Windows.Forms.TextBox txtScore;
-        private System.Windows.Forms.TextBox txtTotal;
-        private System.Windows.Forms.Button btnTimer;
         private System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.CheckBox cb29;
         private System.Windows.Forms.PictureBox N29;
@@ -1696,12 +1769,20 @@
         private System.Windows.Forms.Label lblBG3;
         private System.Windows.Forms.Label lblBB3;
         private System.Windows.Forms.Label lblBA4;
-        private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Panel pnScore;
-        private System.Windows.Forms.TextBox txtSetInterval;
-        private System.Windows.Forms.TextBox txtTimer1;
-        private System.Windows.Forms.CheckBox cbInterval;
         private System.Windows.Forms.Panel pnCheckBoxes;
+        private System.Windows.Forms.CheckBox cbFocus;
+        private System.Windows.Forms.Label lblTimerDisplay;
+        private System.Windows.Forms.Button btnResetNew;
+        private System.Windows.Forms.Button btnPractice;
+        private System.Windows.Forms.Panel pnlStatistics;
+        private System.Windows.Forms.Label lblAccuracyDisplay;
+        private System.Windows.Forms.Label lblTotalDisplay;
+        private System.Windows.Forms.Label lblTotalPoints;
+        private System.Windows.Forms.Label lblAccuracy;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.ComboBox cbPreset;
+        private System.Windows.Forms.Label lblPointsDisplay;
+        private System.Windows.Forms.Timer FadeTimer;
     }
 }
 

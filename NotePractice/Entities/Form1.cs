@@ -7,84 +7,130 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NotePractice.Entities;
 
 namespace NotePractice
 {
     public partial class Form1 : Form
     {
-        // TO DO: Break up this brainstorm code into Classes and OOSD
 
         public Form1()
         {
             InitializeComponent();
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)          // start game on form load
-        {
             NoteClear();
             LedgerLineClear();
             CheckBoxesVisable();
- 
+            cbPreset.Text = "Treble Clef";
         }
 
-        // global variables and list
+        private KeyRandomizer userKeyListObject;
+        private Statistics sessionStatistics;
+        private GameTimer sessionTimer;
+        private FadeTimer pointFade;
+        private Focus sessionFocus;
+ 
 
-        List<int> myChoseNote = new List<int>();
-        int randNote;
-        int randx; // keep track of output of randomizer
-        decimal correct = 0;
-        decimal total = 0;
-        decimal score = 0;
-        int timerCounter = 0;
-        int interval = 0;
+        private void btnPractice_Click(object sender, EventArgs e)
+        {
+            userKeyListObject = new KeyRandomizer(putUserSelectedKeysIntoList());
+
+            sessionStatistics = new Statistics();
+
+            sessionTimer = new GameTimer();
+
+            NoteClear();
+
+            LedgerLineClear();
+
+            Timer.Start();  
+            
+            getRandomKeyAndDisplay();
+
+            CheckBoxesHidden();
+
+            lblTimerDisplay.Visible = true;
+       
+        }
+
+        private void cbFocus_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbFocus.Checked)
+            {
+                sessionFocus = new Focus();
+            }
+            else
+            {
+                sessionFocus.FocusModeEnabled = false;
+            }
+        }
+
+        private void btnResetNew_Click(object sender, EventArgs e)
+        {
+            NoteClear();
+            LedgerLineClear();
+            Timer.Stop();
+            statisticDisplaysClear();
+            CheckboxClear();
+            CheckBoxesVisable();
+        }
+
 
         
         // GAME OPERATION---------------------------------------------------------------------
 
 
-        private void noteList()
-        {
+        private List<int> putUserSelectedKeysIntoList()
+        {// go through all checkboxes and return list to practice with
 
+             List<int> usersSelectedKeys = new List<int>();
 
-            foreach (CheckBox cb in pnCheckBoxes.Controls.OfType<CheckBox>())
+            while (!usersSelectedKeys.Any())
             {
-                if (cb.Checked == true)
+
+                foreach (CheckBox cb in pnCheckBoxes.Controls.OfType<CheckBox>())
                 {
-                    string cbParse = cb.Name;
-                    cbParse = cbParse.Remove(0, 2);
-                    int cbNumber = Convert.ToInt16(cbParse);
-                    myChoseNote.Add(cbNumber);
-                }         
+                    if (cb.Checked == true)
+                    {
+                        string cbParse = cb.Name;
+                        cbParse = cbParse.Remove(0, 2);
+                        int cbNumber = Convert.ToInt16(cbParse);
+                        usersSelectedKeys.Add(cbNumber);
+                    }
+                }
+
+            if (!usersSelectedKeys.Any()) // EDGE CASE - if no keys selected, select all keys by default          
+                CheckBoxSelectAll();
+
             }
+            return usersSelectedKeys;
+        }      
 
-        }      // checkboxes of whose in the list
 
-        private void randomNote()
+
+        private void getRandomKeyAndDisplay()
         {
-            CheckBoxesHidden();
-
-            counters();
-             
-            myChoseNote.Clear();
-            noteList();
-
-            Random rnd = new Random();
-
-            randx = rnd.Next(0, myChoseNote.Count);
-            try
+            if (sessionFocus != null)
             {
-                randNote = myChoseNote.ElementAt(randx);
+                if (sessionFocus.FocusModeEnabled)
+                { // use focus list accumulated by tracking user performance from first round
+
+                    userKeyListObject.extractUserRandomKeyToMember(sessionFocus.FocusList);
+                }
+                else
+                { // use normal list for first round to accumulate user performance data
+
+                    userKeyListObject.extractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList);
+                }
             }
-            catch (Exception)
-            {
-                MessageBox.Show("If you don't select at least one box I will select one for you");
+            else
+            { // if the focus button is not pressed use normal default list
+
+                userKeyListObject.extractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList); // Default list
             }
+         
+            switch (userKeyListObject.CurrentRandomKey)
+            {// calls note and ledger line of selected random key
 
-
-
-            switch (randNote)
-            {
                 case 41:
                     N41.Visible = true;
                     lblBC4.Visible = true;
@@ -253,42 +299,50 @@ namespace NotePractice
 
             }
 
-
-        }    // picks random note from available list, calls pic of note
+        }    
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
-        {
-            if ((((((((e.KeyCode == Keys.D) && (new[] { 41, 34, 27, 20, 13, 6}).Contains(randNote))
-                  || ((e.KeyCode == Keys.C) && (new[] { 40, 33, 26, 19, 12, 5 }).Contains(randNote)))
-                  || ((e.KeyCode == Keys.B) && (new[] { 39, 32, 25, 18, 11, 4 }).Contains(randNote)))
-                  || ((e.KeyCode == Keys.A) && (new[] { 38, 31, 24, 17, 10, 3 }).Contains(randNote)))
-                  || ((e.KeyCode == Keys.G) && (new[] { 37, 30, 23, 16, 9, 2  }).Contains(randNote)))
-                  || ((e.KeyCode == Keys.F) && (new[] { 36, 29, 22, 15, 8, 1  }).Contains(randNote)))
-                  || ((e.KeyCode == Keys.E) && (new[] { 35, 28, 21, 14, 7, 0  }).Contains(randNote)))                         
-            {
-                if (total == 0)
-                {
-                    Timer.Start();                 
-                }
+        {// if user presses right key then get another note, otherwise keep racking up points
 
-                correct++;
+            if ((((((((e.KeyCode == Keys.D) && (new[] { 41, 34, 27, 20, 13, 6}).Contains(userKeyListObject.CurrentRandomKey))
+                  || ((e.KeyCode == Keys.C) && (new[] { 40, 33, 26, 19, 12, 5 }).Contains(userKeyListObject.CurrentRandomKey)))
+                  || ((e.KeyCode == Keys.B) && (new[] { 39, 32, 25, 18, 11, 4 }).Contains(userKeyListObject.CurrentRandomKey)))
+                  || ((e.KeyCode == Keys.A) && (new[] { 38, 31, 24, 17, 10, 3 }).Contains(userKeyListObject.CurrentRandomKey)))
+                  || ((e.KeyCode == Keys.G) && (new[] { 37, 30, 23, 16, 9, 2  }).Contains(userKeyListObject.CurrentRandomKey)))
+                  || ((e.KeyCode == Keys.F) && (new[] { 36, 29, 22, 15, 8, 1  }).Contains(userKeyListObject.CurrentRandomKey)))
+                  || ((e.KeyCode == Keys.E) && (new[] { 35, 28, 21, 14, 7, 0  }).Contains(userKeyListObject.CurrentRandomKey)))                         
+            {
+
+                pointFade = new FadeTimer(0, 255, 0); // for green and red score display
+                pointFade.PositiveOrNegativePoints = true;
+                FadeTimer.Start();
+
+                sessionStatistics.Correct++;
+                sessionStatistics.Total++;
+                sessionStatistics.TotalPoints += 5;
                 NoteClear();
                 LedgerLineClear();
-                randomNote();
-            }
-            
-            if(e.KeyCode >=Keys.A && e.KeyCode <=Keys.Z)
+                getRandomKeyAndDisplay();
+            }           
+            else if(e.KeyCode >=Keys.A && e.KeyCode <=Keys.Z)
             {
-                total++;
-                counters();
-            } 
-        }   // if key pressed == random note then clear notes and start again
+
+                pointFade = new FadeTimer(255, 0, 0);
+                pointFade.PositiveOrNegativePoints = false;
+                FadeTimer.Start();
+
+                sessionStatistics.Total++;
+                sessionStatistics.TotalPoints -= 3;
+            }
+            getScoreAndDisplayStatistics();
+
+        }   
 
         // MAINTAINENCE------------------------------------------------------------------------
 
         private void CheckBoxesHidden()
         {
-            foreach (var checkBox in this.Controls.OfType<CheckBox>())
+            foreach (var checkBox in pnCheckBoxes.Controls.OfType<CheckBox>())
             {
                 checkBox.Visible = false;
             }
@@ -296,7 +350,7 @@ namespace NotePractice
 
         private void CheckBoxesVisable()
         {
-            foreach (var checkBox in this.Controls.OfType<CheckBox>())
+            foreach (var checkBox in pnCheckBoxes.Controls.OfType<CheckBox>())
             {
                 checkBox.Visible = true;
             }
@@ -304,14 +358,22 @@ namespace NotePractice
 
         private void CheckboxClear()
         {
-            foreach (var checkBox in this.Controls.OfType<CheckBox>())
+            foreach (var checkBox in pnCheckBoxes.Controls.OfType<CheckBox>())
             {
                 checkBox.Checked = false;
             }        
         }
 
+        private void CheckBoxSelectAll()
+        {
+            foreach (var checkBox in pnCheckBoxes.Controls.OfType<CheckBox>())
+            {
+                checkBox.Checked = true;
+            }
+        }
+
         private void NoteClear()
-        { // clear all notes and sub-lines
+        { // clear all notes 
 
             foreach (var note in this.Controls.OfType<PictureBox>())
             {             
@@ -320,9 +382,7 @@ namespace NotePractice
 
             trebleClef.Visible = true;
             bassClef.Visible = true;
-
-            
-        }     // clears all note images from screen
+        }   
 
         private void LedgerLineClear()
         {
@@ -332,116 +392,87 @@ namespace NotePractice
             {
                 label.Visible = false;
             }
+        }
+       
+        // STATISTICS---------------------------------------------------------------------------
 
+        private void getScoreAndDisplayStatistics()
+        {
+            decimal correct = sessionStatistics.Correct;
+            decimal total = sessionStatistics.Total;
+            decimal accuracy = sessionStatistics.Accuracy;
+            int totalPoints = sessionStatistics.TotalPoints;
+
+            lblTotalDisplay.Text = totalPoints.ToString();
+
+            if (total != 0)
+            {
+                accuracy = sessionStatistics.calculateAccuracy(correct, total);
+                lblAccuracyDisplay.Text = accuracy.ToString("P");
+            }
         }
 
-        // GAME CONTROLS------------------------------------------------------------------------
-
-        private void btnTimer_Click(object sender, EventArgs e)     // PRACTICE BUTTON
+        private void statisticDisplaysClear()
         {
-            timerCounter = 0;
-            NoteClear();
-            Timer.Start();
-            statisticsClear();
-            txtSetInterval.Enabled = false;
-            randomNote();
-            btnTimer.Enabled = false;        
-            CheckBoxesHidden();
-            cbInterval.Enabled = false;
-          
-        }   
-
-    
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            NoteClear();
-            LedgerLineClear();
-            Timer.Stop();
-            btnTimer.Enabled = true;
-            CheckBoxesVisable();
-            CheckboxClear();
-            statisticsClear();
-            statisticsShow();
-            cbInterval.Enabled = true;
-            txtSetInterval.Enabled = true;
-            txtSetInterval.Text = "";
-            txtTimer1.Text = "";
-
-     
+            lblPointsDisplay.Text = "";
+            lblAccuracyDisplay.Text = "";
+            lblTotalDisplay.Text = "";
+            lblTimerDisplay.Text = "";
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            timerCounter++;
+            sessionTimer.TimerCount--;
+            lblTimerDisplay.Text = (sessionTimer.TimerCount).ToString();
 
-            txtTimer1.Text = timerCounter.ToString();
+            if (sessionTimer.TimerCount == 0)
+            {// when round is over
 
-            if (cbInterval.Checked == true)
-            {
-                interval = Convert.ToInt32(txtSetInterval.Text);
+                Timer.Stop();
+                CheckBoxesVisable();
+                lblTimerDisplay.Visible = false;
 
-                if (timerCounter == interval)
-                {
-                    NoteClear();
-                    randomNote();
-                    timerCounter = 0;
+                if (cbFocus.Checked)
+                { // if focus mode enabled - create focus list based on users first round performance
+                    sessionFocus.createFocusList();
+                    sessionFocus.FocusModeEnabled = true;
                 }
             }
-
-            if (timerCounter == 60)
-            {
-                Timer.Stop();
-                btnTimer.Enabled = true;
-                cbInterval.Enabled = true;
-                statisticsShow();
-            }
-        } 
-
-
-        // STATISTICS---------------------------------------------------------------------------
-
-        private void counters()
-        {  // keep track of statistics
-
-            txtCorrect.Text = correct.ToString();
-            txtTotal.Text = total.ToString();
-            if (total != 0)
-            {
-                score = correct / total;
-                txtScore.Text = score.ToString("P");
-            }
-        }      
-
-        private void statisticsShow()
-        {
-            foreach (Control ctrl in pnScore.Controls)
-            {      
-                    ctrl.Visible = true;
-            }
         }
 
-        private void statisticsHide()
-        {
-            foreach (Control ctrl in pnScore.Controls)
+
+        private void FadeTimer_Tick(object sender, EventArgs e)
+        { // Animation which allows points added or subtracted to fade away
+
+            pointFade.FadeTimerCount--;
+            int endColor = 105; // this was static RGB 105 - will have to mod depend on GUI picture
+            int fadeRate = 5;
+
+            if (pointFade.PositiveOrNegativePoints)
+            { // if positive points apply green color + fade
+
+                lblPointsDisplay.ForeColor = Color.FromArgb(pointFade.R, pointFade.G, pointFade.B);
+                lblPointsDisplay.Text = "+5";
+
+                if (pointFade.R < endColor) pointFade.R += fadeRate;
+                if (pointFade.G > endColor) pointFade.G -= fadeRate;
+                if (pointFade.B < endColor) pointFade.B += fadeRate;
+            }
+            else
+            { // if negative points apply red color + fade
+
+                lblPointsDisplay.ForeColor = Color.FromArgb(pointFade.R, pointFade.G, pointFade.B);
+                lblPointsDisplay.Text = "-3";
+
+                if (pointFade.R > endColor) pointFade.R -= fadeRate;
+                if (pointFade.G < endColor) pointFade.G += fadeRate;
+                if (pointFade.B < endColor) pointFade.B += fadeRate;
+            }
+
+            if (pointFade.FadeTimerCount == 0)
             {
-                ctrl.Visible = false;
+                FadeTimer.Stop();
             }
         }
-
-        private void statisticsClear()
-        {
-            correct = 0;
-            score = 0;
-            total = 0;
-            txtCorrect.Text = correct.ToString();
-            txtTotal.Text = total.ToString();
-            txtScore.Text = total.ToString();
-        }
-
-      
-
     }
-
-
 }

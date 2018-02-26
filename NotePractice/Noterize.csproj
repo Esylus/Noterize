@@ -51,6 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\FadeTimer.cs" />
+    <Compile Include="Entities\Focus.cs" />
+    <Compile Include="Entities\GameTimer.cs" />
+    <Compile Include="Entities\KeyRandomizer.cs" />
     <Compile Include="Entities\Preset.cs" />
     <Compile Include="Entities\PresetDBHelper.cs" />
     <Compile Include="Entities\Form1.cs">
@@ -60,6 +64,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Entities\Program.cs" />
+    <Compile Include="Entities\Statistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Entities\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -101,6 +106,9 @@
     <Content Include="images\Musical Spheres logo2 edit.jpg" />
     <Content Include="images\oldpaper2.jpg" />
     <Content Include="images\paper1bg.png" />
+    <Content Include="images\piano.jpg" />
+    <Content Include="images\pianocrop.jpg" />
+    <Content Include="images\pianocrop2.jpg" />
     <Content Include="images\rainforest.jpg" />
     <Content Include="images\treble.png" />
     <Content Include="images\treble2.png" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,10 +30,11 @@ namespace NotePractice
 
         public void InitializeOnLoad()
         {
+            LoadPresetComboBox();
             NoteClear();
             LedgerLineClear();
             CheckBoxesVisable();
-            cbPreset.Text = "Treble Clef";
+            cbPreset.Text = "Default";
         }
 
         private void btnPractice_Click(object sender, EventArgs e)
@@ -98,15 +100,15 @@ namespace NotePractice
                 {
                     if (cb.Checked == true)
                     {
-                        string cbParse = cb.Name;
+                        string cbParse = cb.Name; 
                         cbParse = cbParse.Remove(0, 2);
                         int cbNumber = Convert.ToInt16(cbParse);
                         usersSelectedKeys.Add(cbNumber);
                     }
                 }
 
-            if (!usersSelectedKeys.Any()) // EDGE CASE - if no keys selected, select all keys by default          
-                CheckBoxSelectAll();
+                if (!usersSelectedKeys.Any()) // EDGE CASE - if no keys selected, select all keys by default          
+                    CheckBoxSelectAll();
 
             }
 
@@ -126,7 +128,6 @@ namespace NotePractice
                     cb.Checked = true;
                 }
             }
-
             return usersSelectedKeys;
         }      
 
@@ -375,7 +376,6 @@ namespace NotePractice
                 sessionStatistics.TotalPoints -= 3;
             }
             GetScoreAndDisplayStatistics();
-
         }   
 
         // MAINTAINENCE------------------------------------------------------------------------
@@ -514,6 +514,136 @@ namespace NotePractice
             if (pointFade.FadeTimerCount == 0)
             {
                 FadeTimer.Stop();
+            }
+        }
+
+        private void LoadPresetComboBox()
+        {
+            if (File.Exists("NoterizePresets.sqlite"))
+            {
+                PresetDBHelper.ConnectToDatabase();
+                PresetDBHelper.PrintPresetsComboBox(cbPreset);
+                cbPreset.Text = "Default";
+            }
+            else
+            {
+
+                PresetDBHelper.CreateNewDatabase();
+                PresetDBHelper.ConnectToDatabase();
+                PresetDBHelper.CreateTable();
+                PresetDBHelper.InsertDefault();
+                PresetDBHelper.PrintPresetsComboBox(cbPreset);
+                cbPreset.Text = "Default";
+            }
+        }
+
+        private void RefreshPresetComboBox()
+        {
+            cbPreset.Items.Clear();
+            PresetDBHelper.ConnectToDatabase();
+            PresetDBHelper.PrintPresetsComboBox(cbPreset);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {   // gather all user selected keys and look up in dictionary to get the int value
+            // add int to list to make a user list saved as a string
+            // put string and name of string into preset object and save to db
+
+            try
+            {
+                List<int> usersSelectedKeys = new List<int>();
+             
+                    foreach (CheckBox cb in pnCheckBoxes.Controls.OfType<CheckBox>())
+                    {
+                        if (cb.Checked == true)
+                        {
+                            string cbParse = cb.Name;
+                            cbParse = cbParse.Remove(0, 2);
+                            int cbNumber = Convert.ToInt16(cbParse);
+                            usersSelectedKeys.Add(cbNumber);
+                        }
+                    }
+
+                string myPresetList = "";
+                string name = cbPreset.Text;
+
+                    foreach (int keyNum in usersSelectedKeys)
+                    {
+                        myPresetList += keyNum.ToString() + " ";
+                    }
+
+                if (string.IsNullOrEmpty(name) || (string.IsNullOrEmpty(myPresetList)))
+                {
+                    throw new ApplicationException();  // to ensure that blank presets are not saved
+                }
+
+                Preset newPreset = new Preset(name, myPresetList);
+
+                PresetDBHelper.ConnectToDatabase();
+                PresetDBHelper.InsertPreset(newPreset);
+                RefreshPresetComboBox();
+                MessageBox.Show("New Preset Created ");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Saving preset requires a name and keys selected ");
+            }
+        }
+
+        private Dictionary<int, CheckBox> LookUpCheckBoxes()
+        {
+         Dictionary<int, CheckBox> NumberAllCheckBoxes = new Dictionary<int, CheckBox>();
+
+            List<CheckBox> allCheckBoxNames = new List<CheckBox>()
+            {
+                cb0,cb1,cb2,cb3,cb4,cb5,cb6,cb7,cb8,cb9,cb10,cb11,cb12,cb13,cb14,cb15,cb16,cb17,cb18,cb19,cb20,cb21,
+                cb22,cb23,cb24,cb25,cb26,cb27,cb28,cb29,cb30,cb31,cb32,cb33,cb34,cb35,cb36,cb37,cb38,cb39,cb40,cb41
+            };
+
+            int count = 0;
+            foreach (CheckBox cb in allCheckBoxNames)
+            {
+                NumberAllCheckBoxes.Add(count, cb);
+                count++;
+            }
+            return NumberAllCheckBoxes;
+        }
+
+        private void cbPreset_SelectedIndexChanged(object sender, EventArgs e)
+        {          
+            PresetDBHelper.ConnectToDatabase();
+
+            string preset = "";
+            preset = PresetDBHelper.GetPresetList(cbPreset.Text);
+
+            preset = preset.TrimEnd();
+            string[] presetStrings = preset.Split();
+
+            List<int> presetInts = new List<int>();
+
+                foreach (string str in presetStrings)
+                {
+
+                    presetInts.Add(Convert.ToInt32(str));
+                }
+
+                foreach (CheckBox cb in pnCheckBoxes.Controls.OfType<CheckBox>())
+                {
+                    cb.Checked = false;
+                }
+
+            Dictionary<int, CheckBox> NumberedCheckBoxNames = LookUpCheckBoxes();
+
+            foreach (int cbInt in presetInts)
+            {
+                foreach (KeyValuePair<int, CheckBox> keyString in NumberedCheckBoxNames)
+                {
+                    // look up checkbox name in Dictionary and add number to list
+                    if (cbInt == keyString.Key)
+                    {
+                        keyString.Value.Checked = true;
+                    }
+                }               
             }
         }
     }

@@ -1493,6 +1493,7 @@
             this.btnSave.TabStop = false;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // cbPreset
             // 
@@ -1504,6 +1505,7 @@
             this.cbPreset.Size = new System.Drawing.Size(118, 21);
             this.cbPreset.TabIndex = 146;
             this.cbPreset.TabStop = false;
+            this.cbPreset.SelectedIndexChanged += new System.EventHandler(this.cbPreset_SelectedIndexChanged);
             // 
             // lblPointsDisplay
             // 

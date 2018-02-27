@@ -17,10 +17,7 @@ namespace NotePractice
         public Form1()
         {
             InitializeComponent();
-            NoteClear();
-            LedgerLineClear();
-            CheckBoxesVisable();
-            cbPreset.Text = "Treble Clef";
+            InitializeOnLoad();
         }
 
         private KeyRandomizer userKeyListObject;
@@ -30,10 +27,17 @@ namespace NotePractice
         private Focus sessionFocus;
         private bool disableKeyBoard = true;
 
+        public void InitializeOnLoad()
+        {
+            NoteClear();
+            LedgerLineClear();
+            CheckBoxesVisable();
+            cbPreset.Text = "Treble Clef";
+        }
 
         private void btnPractice_Click(object sender, EventArgs e)
         {
-            userKeyListObject = new KeyRandomizer(putUserSelectedKeysIntoList());
+            userKeyListObject = new KeyRandomizer(PutUserSelectedKeysIntoList());
 
             sessionStatistics = new Statistics();
 
@@ -47,12 +51,11 @@ namespace NotePractice
 
             disableKeyBoard = false;
 
-            getRandomKeyAndDisplay();
+            GetRandomKeyAndDisplay();
 
             CheckBoxesHidden();
 
-            lblTimerDisplay.Visible = true;
-       
+            lblTimerDisplay.Visible = true;      
         }
 
         private void cbFocus_CheckedChanged(object sender, EventArgs e)
@@ -72,7 +75,7 @@ namespace NotePractice
             NoteClear();
             LedgerLineClear();
             Timer.Stop();
-            statisticDisplaysClear();
+            StatisticDisplaysClear();
             CheckboxClear();
             CheckBoxesVisable();
             disableKeyBoard = true;
@@ -83,7 +86,7 @@ namespace NotePractice
         // GAME OPERATION---------------------------------------------------------------------
 
 
-        private List<int> putUserSelectedKeysIntoList()
+        private List<int> PutUserSelectedKeysIntoList()
         {// go through all checkboxes and return list to practice with
 
              List<int> usersSelectedKeys = new List<int>();
@@ -129,25 +132,25 @@ namespace NotePractice
 
 
 
-        private void getRandomKeyAndDisplay()
+        private void GetRandomKeyAndDisplay()
         {
             if (sessionFocus != null)
             {
                 if (sessionFocus.FocusModeEnabled)
                 { // use focus list accumulated by tracking user performance from first round
 
-                    userKeyListObject.extractUserRandomKeyToMember(sessionFocus.FocusList);
+                    userKeyListObject.ExtractUserRandomKeyToMember(sessionFocus.FocusList);
                 }
                 else
                 { // use normal list for first round to accumulate user performance data
 
-                    userKeyListObject.extractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList);
+                    userKeyListObject.ExtractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList);
                 }
             }
             else
             { // if the focus button is not pressed use normal default list
 
-                userKeyListObject.extractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList); // Default list
+                userKeyListObject.ExtractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList); // Default list
             }
          
             switch (userKeyListObject.CurrentRandomKey)
@@ -346,7 +349,7 @@ namespace NotePractice
 
                 if (cbFocus.Checked) // if in focus mode, collect user performance data
                 {
-                    sessionFocus.recordUserResults(userKeyListObject.CurrentRandomKey, 1);
+                    sessionFocus.RecordUserResults(userKeyListObject.CurrentRandomKey, 1);
                 }
 
                 sessionStatistics.Correct++;
@@ -354,7 +357,7 @@ namespace NotePractice
                 sessionStatistics.TotalPoints += 5;
                 NoteClear();
                 LedgerLineClear();
-                getRandomKeyAndDisplay();
+                GetRandomKeyAndDisplay();
             }           
             else if(e.KeyCode >=Keys.A && e.KeyCode <=Keys.Z)
             {
@@ -365,13 +368,13 @@ namespace NotePractice
 
                 if (cbFocus.Checked)
                 {
-                    sessionFocus.recordUserResults(userKeyListObject.CurrentRandomKey, 0);
+                    sessionFocus.RecordUserResults(userKeyListObject.CurrentRandomKey, 0);
                 }
 
                 sessionStatistics.Total++;
                 sessionStatistics.TotalPoints -= 3;
             }
-            getScoreAndDisplayStatistics();
+            GetScoreAndDisplayStatistics();
 
         }   
 
@@ -433,7 +436,7 @@ namespace NotePractice
        
         // STATISTICS---------------------------------------------------------------------------
 
-        private void getScoreAndDisplayStatistics()
+        private void GetScoreAndDisplayStatistics()
         {
             decimal correct = sessionStatistics.Correct;
             decimal total = sessionStatistics.Total;
@@ -444,12 +447,12 @@ namespace NotePractice
 
             if (total != 0)
             {
-                accuracy = sessionStatistics.calculateAccuracy(correct, total);
+                accuracy = sessionStatistics.CalculateAccuracy(correct, total);
                 lblAccuracyDisplay.Text = accuracy.ToString("P");
             }
         }
 
-        private void statisticDisplaysClear()
+        private void StatisticDisplaysClear()
         {
             lblPointsDisplay.Text = "";
             lblAccuracyDisplay.Text = "";
@@ -473,7 +476,7 @@ namespace NotePractice
 
                 if (cbFocus.Checked)
                 { // if focus mode enabled - create focus list based on users first round performance
-                    sessionFocus.createFocusList();
+                    sessionFocus.CreateFocusList();
                     sessionFocus.FocusModeEnabled = true;
                 }
             }

@@ -36,14 +36,14 @@ namespace NotePractice.Entities
             FocusModeEnabled = false;
         }
 
-        public void recordUserResults(int currentKey, int rightOrWrong)
+        public void RecordUserResults(int currentKey, int rightOrWrong)
         {
             userResultsList.Add(new KeyValuePair<int, int>(currentKey, rightOrWrong));
         }
 
         //-----------------------------------------Processing----------------------
 
-        public void createFocusList()
+        public void CreateFocusList()
         {// get all unique keys from users results, parse out attempts and correct strikes to create average
 
             totalsKeyValuePairList.Clear();
@@ -65,14 +65,14 @@ namespace NotePractice.Entities
                 totalsKeyValuePairList.Add(uniqueKey, average);  // store to dictionary
             }
 
-            populateFocusList();                               // create new focusList
+            PopulateFocusList();                               // create new focusList
             userResultsList.Clear();                           // clear results list to prepare for next round
 
-            populateTotalInFocusList();  // TESTING PURPOSES ONLY
+            PopulateTotalInFocusList();  // TESTING PURPOSES ONLY
 
         }
 
-        public void populateFocusList()        // Scale to determine key composition of future test based on past performance
+        public void PopulateFocusList()        // Scale to determine key composition of future test based on past performance
         {
             foreach (var totalPair in totalsKeyValuePairList)
             {
@@ -113,7 +113,7 @@ namespace NotePractice.Entities
 
         private Dictionary<int, int> totalsInFocusList = new Dictionary<int, int>();  // TESTING to observe composition of focus List (key, #ofOccurences)
 
-        private void populateTotalInFocusList()   // TESTING PURPOSES ONLY - Create dictionary of focusList composition of occurences
+        private void PopulateTotalInFocusList()   // TESTING PURPOSES ONLY - Create dictionary of focusList composition of occurences
         {
             var g = focusList.GroupBy(i => i);
 

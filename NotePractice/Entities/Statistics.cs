@@ -25,7 +25,7 @@ namespace NotePractice.Entities
             TotalPoints = 0;
         }
 
-        public decimal calculateAccuracy(decimal correct, decimal total)
+        public decimal CalculateAccuracy(decimal correct, decimal total)
         {
             decimal accuracy = (correct / total);
             Accuracy = accuracy;

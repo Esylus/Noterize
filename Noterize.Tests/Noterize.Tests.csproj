@@ -46,7 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestTests.cs" />
+    <Compile Include="Tests\FocusTest.cs" />
+    <Compile Include="Tests\KeyRandomizerTest.cs" />
+    <Compile Include="Tests\StatisticsTest.cs" />
+    <Compile Include="Tests\TestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

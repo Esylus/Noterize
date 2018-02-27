@@ -27,15 +27,15 @@ namespace NotePractice.Entities
             userSelectedKeyList = populateUserSelectedKeyList;
         }
 
-        public void extractUserRandomKeyToMember(List<int> userList)
+        public void ExtractUserRandomKeyToMember(List<int> userList)
         {//for any list, get a non-duplicate number and extract it's element to be the CurrentRandomKey
 
-            int nonDuplicateInt = preventDuplicates(userList);
+            int nonDuplicateInt = PreventDuplicates(userList);
             int selectedKeyFromUserList = userList.ElementAt(nonDuplicateInt);
             CurrentRandomKey = selectedKeyFromUserList;
         }
 
-        public int preventDuplicates(List<int> list)
+        public int PreventDuplicates(List<int> list)
         {// for any list, select a key that is unique from the key that preceded it
 
             int randomIntFromUserList = 0;
@@ -43,7 +43,7 @@ namespace NotePractice.Entities
 
             do
             {
-                randomIntFromUserList = getRandomIntFromAnyList(list);
+                randomIntFromUserList = GetRandomIntFromAnyList(list);
                 elementAtRandomIntFromUserList = list.ElementAt(randomIntFromUserList);
 
             } while (elementAtRandomIntFromUserList == LastRandomKey);
@@ -53,7 +53,7 @@ namespace NotePractice.Entities
             return randomIntFromUserList;
         }
 
-        public int getRandomIntFromAnyList(List<int> rawList)
+        public int GetRandomIntFromAnyList(List<int> rawList)
         {//take any list and get one random value from it
 
             Random random = new Random();

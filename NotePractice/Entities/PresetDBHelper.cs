@@ -12,18 +12,18 @@ namespace NotePractice.Entities
     {
         private static SQLiteConnection m_dbConnection;
 
-        public static void createNewDatabase()
+        public static void CreateNewDatabase()
         {
             SQLiteConnection.CreateFile("NoterizePresets.sqlite");
         }
 
-        public static void connectToDatabase()
+        public static void ConnectToDatabase()
         {
             m_dbConnection = new SQLiteConnection("Data Source=NoterizePresets.sqlite;Version=3;");
             m_dbConnection.Open();
         }
 
-        public static void createTable()
+        public static void CreateTable()
         {
             string sql = "create table if not exists userPresets (name varchar(20), list varchar(300))";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
@@ -44,7 +44,7 @@ namespace NotePractice.Entities
             command.ExecuteNonQuery();
         }
 
-        public static void printPresetsComboBox(ComboBox comboBox)
+        public static void PrintPresetsComboBox(ComboBox comboBox)
         {
             string sql = "select * from userPresets";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
@@ -58,7 +58,7 @@ namespace NotePractice.Entities
             m_dbConnection.Close();
         }
 
-        public static string getPresetList(string presetName)
+        public static string GetPresetList(string presetName)
         {
 
             string sql = "select * from userPresets where name = '" + presetName + "'";

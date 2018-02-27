@@ -1383,7 +1383,6 @@
             // 
             this.cbFocus.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbFocus.BackColor = System.Drawing.Color.Black;
-            this.cbFocus.Enabled = false;
             this.cbFocus.ForeColor = System.Drawing.Color.White;
             this.cbFocus.Location = new System.Drawing.Point(98, 71);
             this.cbFocus.Name = "cbFocus";
@@ -1400,7 +1399,7 @@
             this.lblTimerDisplay.AutoSize = true;
             this.lblTimerDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lblTimerDisplay.Font = new System.Drawing.Font("Verdana", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTimerDisplay.Location = new System.Drawing.Point(482, 54);
+            this.lblTimerDisplay.Location = new System.Drawing.Point(433, 58);
             this.lblTimerDisplay.Name = "lblTimerDisplay";
             this.lblTimerDisplay.Size = new System.Drawing.Size(0, 65);
             this.lblTimerDisplay.TabIndex = 141;

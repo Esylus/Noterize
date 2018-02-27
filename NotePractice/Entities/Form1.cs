@@ -28,7 +28,8 @@ namespace NotePractice
         private GameTimer sessionTimer;
         private FadeTimer pointFade;
         private Focus sessionFocus;
- 
+        private bool disableKeyBoard = true;
+
 
         private void btnPractice_Click(object sender, EventArgs e)
         {
@@ -42,8 +43,10 @@ namespace NotePractice
             
             LedgerLineClear();
 
-            Timer.Start();  
-            
+            Timer.Start();
+
+            disableKeyBoard = false;
+
             getRandomKeyAndDisplay();
 
             CheckBoxesHidden();
@@ -72,6 +75,7 @@ namespace NotePractice
             statisticDisplaysClear();
             CheckboxClear();
             CheckBoxesVisable();
+            disableKeyBoard = true;
         }
 
 
@@ -102,6 +106,24 @@ namespace NotePractice
                 CheckBoxSelectAll();
 
             }
+
+            if (usersSelectedKeys.Count < 2)
+            { // EDGE CASE - KeyRandomizer.cs method prevents any key from repeating 
+                // if only a single key is selected the below default will select entire home row
+
+                MessageBox.Show("Must select minimum two notes as notes are unable to repeat themselves. " +
+                                "Now practice the treble cleff or hit Reset and select again!");
+                usersSelectedKeys.Clear();
+                CheckboxClear();
+                int[] range = { 7, 8, 9, 10, 11, 12, 13, 14 };
+                usersSelectedKeys.AddRange(range);
+                CheckBox[] cbRange = new CheckBox[] { cb7, cb8, cb9, cb10, cb11, cb12, cb13, cb14 };
+                foreach (CheckBox cb in cbRange)
+                {
+                    cb.Checked = true;
+                }
+            }
+
             return usersSelectedKeys;
         }      
 
@@ -304,6 +326,11 @@ namespace NotePractice
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {// if user presses right key then get another note, otherwise keep racking up points
 
+            if (disableKeyBoard)
+            {
+                return;
+            }
+
             if ((((((((e.KeyCode == Keys.D) && (new[] { 41, 34, 27, 20, 13, 6}).Contains(userKeyListObject.CurrentRandomKey))
                   || ((e.KeyCode == Keys.C) && (new[] { 40, 33, 26, 19, 12, 5 }).Contains(userKeyListObject.CurrentRandomKey)))
                   || ((e.KeyCode == Keys.B) && (new[] { 39, 32, 25, 18, 11, 4 }).Contains(userKeyListObject.CurrentRandomKey)))
@@ -432,8 +459,9 @@ namespace NotePractice
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            sessionTimer.TimerCount--;
+            
             lblTimerDisplay.Text = (sessionTimer.TimerCount).ToString();
+            sessionTimer.TimerCount--;
 
             if (sessionTimer.TimerCount == 0)
             {// when round is over
@@ -441,6 +469,7 @@ namespace NotePractice
                 Timer.Stop();
                 CheckBoxesVisable();
                 lblTimerDisplay.Visible = false;
+                disableKeyBoard = true;
 
                 if (cbFocus.Checked)
                 { // if focus mode enabled - create focus list based on users first round performance

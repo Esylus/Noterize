@@ -1383,7 +1383,6 @@
             // 
             this.cbFocus.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbFocus.BackColor = System.Drawing.Color.Black;
-            this.cbFocus.Enabled = false;
             this.cbFocus.ForeColor = System.Drawing.Color.White;
             this.cbFocus.Location = new System.Drawing.Point(98, 71);
             this.cbFocus.Name = "cbFocus";

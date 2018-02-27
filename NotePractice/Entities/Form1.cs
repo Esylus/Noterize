@@ -39,7 +39,7 @@ namespace NotePractice
             sessionTimer = new GameTimer();
 
             NoteClear();
-
+            
             LedgerLineClear();
 
             Timer.Start();  
@@ -317,6 +317,11 @@ namespace NotePractice
                 pointFade.PositiveOrNegativePoints = true;
                 FadeTimer.Start();
 
+                if (cbFocus.Checked) // if in focus mode, collect user performance data
+                {
+                    sessionFocus.recordUserResults(userKeyListObject.CurrentRandomKey, 1);
+                }
+
                 sessionStatistics.Correct++;
                 sessionStatistics.Total++;
                 sessionStatistics.TotalPoints += 5;
@@ -330,6 +335,11 @@ namespace NotePractice
                 pointFade = new FadeTimer(255, 0, 0);
                 pointFade.PositiveOrNegativePoints = false;
                 FadeTimer.Start();
+
+                if (cbFocus.Checked)
+                {
+                    sessionFocus.recordUserResults(userKeyListObject.CurrentRandomKey, 0);
+                }
 
                 sessionStatistics.Total++;
                 sessionStatistics.TotalPoints -= 3;

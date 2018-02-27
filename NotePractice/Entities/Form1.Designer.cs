@@ -1383,7 +1383,6 @@
             // 
             this.cbFocus.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbFocus.BackColor = System.Drawing.Color.Black;
-            this.cbFocus.Enabled = false;
             this.cbFocus.ForeColor = System.Drawing.Color.White;
             this.cbFocus.Location = new System.Drawing.Point(98, 71);
             this.cbFocus.Name = "cbFocus";
@@ -1400,7 +1399,7 @@
             this.lblTimerDisplay.AutoSize = true;
             this.lblTimerDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lblTimerDisplay.Font = new System.Drawing.Font("Verdana", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTimerDisplay.Location = new System.Drawing.Point(482, 54);
+            this.lblTimerDisplay.Location = new System.Drawing.Point(433, 58);
             this.lblTimerDisplay.Name = "lblTimerDisplay";
             this.lblTimerDisplay.Size = new System.Drawing.Size(0, 65);
             this.lblTimerDisplay.TabIndex = 141;
@@ -1494,6 +1493,7 @@
             this.btnSave.TabStop = false;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // cbPreset
             // 
@@ -1505,6 +1505,7 @@
             this.cbPreset.Size = new System.Drawing.Size(118, 21);
             this.cbPreset.TabIndex = 146;
             this.cbPreset.TabStop = false;
+            this.cbPreset.SelectedIndexChanged += new System.EventHandler(this.cbPreset_SelectedIndexChanged);
             // 
             // lblPointsDisplay
             // 
@@ -1529,6 +1530,18 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(742, 765);
+            this.Controls.Add(this.N34);
+            this.Controls.Add(this.N33);
+            this.Controls.Add(this.N32);
+            this.Controls.Add(this.N31);
+            this.Controls.Add(this.N30);
+            this.Controls.Add(this.N29);
+            this.Controls.Add(this.N28);
+            this.Controls.Add(this.N27);
+            this.Controls.Add(this.N26);
+            this.Controls.Add(this.N25);
+            this.Controls.Add(this.N24);
+            this.Controls.Add(this.N23);
             this.Controls.Add(this.pnCheckBoxes);
             this.Controls.Add(this.trebleClef);
             this.Controls.Add(this.N5);
@@ -1540,33 +1553,14 @@
             this.Controls.Add(this.btnResetNew);
             this.Controls.Add(this.btnPractice);
             this.Controls.Add(this.pnlStatistics);
-            this.Controls.Add(this.N29);
-            this.Controls.Add(this.N24);
-            this.Controls.Add(this.N26);
-            this.Controls.Add(this.N30);
-            this.Controls.Add(this.N32);
-            this.Controls.Add(this.N34);
             this.Controls.Add(this.N36);
             this.Controls.Add(this.N38);
             this.Controls.Add(this.N40);
-            this.Controls.Add(this.N23);
-            this.Controls.Add(this.N27);
-            this.Controls.Add(this.N25);
-            this.Controls.Add(this.N31);
-            this.Controls.Add(this.N33);
             this.Controls.Add(this.N35);
             this.Controls.Add(this.N37);
             this.Controls.Add(this.N39);
             this.Controls.Add(this.N41);
-            this.Controls.Add(this.lblBC4);
-            this.Controls.Add(this.lblBC2);
-            this.Controls.Add(this.lblBA2);
             this.Controls.Add(this.bassClef);
-            this.Controls.Add(this.lblBF4);
-            this.Controls.Add(this.lblBD3);
-            this.Controls.Add(this.lblBG3);
-            this.Controls.Add(this.lblBB3);
-            this.Controls.Add(this.lblBA4);
             this.Controls.Add(this.N6);
             this.Controls.Add(this.N1);
             this.Controls.Add(this.N3);
@@ -1589,19 +1583,26 @@
             this.Controls.Add(this.N16);
             this.Controls.Add(this.N18);
             this.Controls.Add(this.N20);
-            this.Controls.Add(this.lblC5);
-            this.Controls.Add(this.lblE6);
-            this.Controls.Add(this.lblA5);
-            this.Controls.Add(this.lblA4);
-            this.Controls.Add(this.lblF4);
-            this.Controls.Add(this.lblC4);
-            this.Controls.Add(this.lblD4);
-            this.Controls.Add(this.lblF5);
-            this.Controls.Add(this.N28);
+            this.Controls.Add(this.lblBA4);
+            this.Controls.Add(this.lblBF4);
+            this.Controls.Add(this.lblBD3);
+            this.Controls.Add(this.lblBB3);
+            this.Controls.Add(this.lblBG3);
             this.Controls.Add(this.lblBE2);
+            this.Controls.Add(this.lblBC2);
+            this.Controls.Add(this.lblBA2);
+            this.Controls.Add(this.lblBC4);
+            this.Controls.Add(this.lblF4);
+            this.Controls.Add(this.lblA4);
+            this.Controls.Add(this.lblC4);
             this.Controls.Add(this.lblE4);
             this.Controls.Add(this.lblG4);
             this.Controls.Add(this.lblB4);
+            this.Controls.Add(this.lblD4);
+            this.Controls.Add(this.lblF5);
+            this.Controls.Add(this.lblA5);
+            this.Controls.Add(this.lblC5);
+            this.Controls.Add(this.lblE6);
             this.DoubleBuffered = true;
             this.KeyPreview = true;
             this.Name = "Form1";

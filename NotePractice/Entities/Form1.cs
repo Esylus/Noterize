@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +18,7 @@ namespace NotePractice
         public Form1()
         {
             InitializeComponent();
-            NoteClear();
-            LedgerLineClear();
-            CheckBoxesVisable();
-            cbPreset.Text = "Treble Clef";
+            InitializeOnLoad();
         }
 
         private KeyRandomizer userKeyListObject;
@@ -28,28 +26,38 @@ namespace NotePractice
         private GameTimer sessionTimer;
         private FadeTimer pointFade;
         private Focus sessionFocus;
- 
+        private bool disableKeyBoard = true;
+
+        public void InitializeOnLoad()
+        {
+            LoadPresetComboBox();
+            NoteClear();
+            LedgerLineClear();
+            CheckBoxesVisable();
+            cbPreset.Text = "Default";
+        }
 
         private void btnPractice_Click(object sender, EventArgs e)
         {
-            userKeyListObject = new KeyRandomizer(putUserSelectedKeysIntoList());
+            userKeyListObject = new KeyRandomizer(PutUserSelectedKeysIntoList());
 
             sessionStatistics = new Statistics();
 
             sessionTimer = new GameTimer();
 
             NoteClear();
-
+            
             LedgerLineClear();
 
-            Timer.Start();  
-            
-            getRandomKeyAndDisplay();
+            Timer.Start();
+
+            disableKeyBoard = false;
+
+            GetRandomKeyAndDisplay();
 
             CheckBoxesHidden();
 
-            lblTimerDisplay.Visible = true;
-       
+            lblTimerDisplay.Visible = true;      
         }
 
         private void cbFocus_CheckedChanged(object sender, EventArgs e)
@@ -69,9 +77,10 @@ namespace NotePractice
             NoteClear();
             LedgerLineClear();
             Timer.Stop();
-            statisticDisplaysClear();
+            StatisticDisplaysClear();
             CheckboxClear();
             CheckBoxesVisable();
+            disableKeyBoard = true;
         }
 
 
@@ -79,7 +88,7 @@ namespace NotePractice
         // GAME OPERATION---------------------------------------------------------------------
 
 
-        private List<int> putUserSelectedKeysIntoList()
+        private List<int> PutUserSelectedKeysIntoList()
         {// go through all checkboxes and return list to practice with
 
              List<int> usersSelectedKeys = new List<int>();
@@ -91,41 +100,58 @@ namespace NotePractice
                 {
                     if (cb.Checked == true)
                     {
-                        string cbParse = cb.Name;
+                        string cbParse = cb.Name; 
                         cbParse = cbParse.Remove(0, 2);
                         int cbNumber = Convert.ToInt16(cbParse);
                         usersSelectedKeys.Add(cbNumber);
                     }
                 }
 
-            if (!usersSelectedKeys.Any()) // EDGE CASE - if no keys selected, select all keys by default          
-                CheckBoxSelectAll();
+                if (!usersSelectedKeys.Any()) // EDGE CASE - if no keys selected, select all keys by default          
+                    CheckBoxSelectAll();
 
+            }
+
+            if (usersSelectedKeys.Count < 2)
+            { // EDGE CASE - KeyRandomizer.cs method prevents any key from repeating 
+                // if only a single key is selected the below default will select entire home row
+
+                MessageBox.Show("Must select minimum two notes as notes are unable to repeat themselves. " +
+                                "Now practice the treble cleff or hit Reset and select again!");
+                usersSelectedKeys.Clear();
+                CheckboxClear();
+                int[] range = { 7, 8, 9, 10, 11, 12, 13, 14 };
+                usersSelectedKeys.AddRange(range);
+                CheckBox[] cbRange = new CheckBox[] { cb7, cb8, cb9, cb10, cb11, cb12, cb13, cb14 };
+                foreach (CheckBox cb in cbRange)
+                {
+                    cb.Checked = true;
+                }
             }
             return usersSelectedKeys;
         }      
 
 
 
-        private void getRandomKeyAndDisplay()
+        private void GetRandomKeyAndDisplay()
         {
             if (sessionFocus != null)
             {
                 if (sessionFocus.FocusModeEnabled)
                 { // use focus list accumulated by tracking user performance from first round
 
-                    userKeyListObject.extractUserRandomKeyToMember(sessionFocus.FocusList);
+                    userKeyListObject.ExtractUserRandomKeyToMember(sessionFocus.FocusList);
                 }
                 else
                 { // use normal list for first round to accumulate user performance data
 
-                    userKeyListObject.extractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList);
+                    userKeyListObject.ExtractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList);
                 }
             }
             else
             { // if the focus button is not pressed use normal default list
 
-                userKeyListObject.extractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList); // Default list
+                userKeyListObject.ExtractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList); // Default list
             }
          
             switch (userKeyListObject.CurrentRandomKey)
@@ -304,6 +330,11 @@ namespace NotePractice
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {// if user presses right key then get another note, otherwise keep racking up points
 
+            if (disableKeyBoard)
+            {
+                return;
+            }
+
             if ((((((((e.KeyCode == Keys.D) && (new[] { 41, 34, 27, 20, 13, 6}).Contains(userKeyListObject.CurrentRandomKey))
                   || ((e.KeyCode == Keys.C) && (new[] { 40, 33, 26, 19, 12, 5 }).Contains(userKeyListObject.CurrentRandomKey)))
                   || ((e.KeyCode == Keys.B) && (new[] { 39, 32, 25, 18, 11, 4 }).Contains(userKeyListObject.CurrentRandomKey)))
@@ -317,12 +348,17 @@ namespace NotePractice
                 pointFade.PositiveOrNegativePoints = true;
                 FadeTimer.Start();
 
+                if (cbFocus.Checked) // if in focus mode, collect user performance data
+                {
+                    sessionFocus.RecordUserResults(userKeyListObject.CurrentRandomKey, 1);
+                }
+
                 sessionStatistics.Correct++;
                 sessionStatistics.Total++;
                 sessionStatistics.TotalPoints += 5;
                 NoteClear();
                 LedgerLineClear();
-                getRandomKeyAndDisplay();
+                GetRandomKeyAndDisplay();
             }           
             else if(e.KeyCode >=Keys.A && e.KeyCode <=Keys.Z)
             {
@@ -331,11 +367,15 @@ namespace NotePractice
                 pointFade.PositiveOrNegativePoints = false;
                 FadeTimer.Start();
 
+                if (cbFocus.Checked)
+                {
+                    sessionFocus.RecordUserResults(userKeyListObject.CurrentRandomKey, 0);
+                }
+
                 sessionStatistics.Total++;
                 sessionStatistics.TotalPoints -= 3;
             }
-            getScoreAndDisplayStatistics();
-
+            GetScoreAndDisplayStatistics();
         }   
 
         // MAINTAINENCE------------------------------------------------------------------------
@@ -396,7 +436,7 @@ namespace NotePractice
        
         // STATISTICS---------------------------------------------------------------------------
 
-        private void getScoreAndDisplayStatistics()
+        private void GetScoreAndDisplayStatistics()
         {
             decimal correct = sessionStatistics.Correct;
             decimal total = sessionStatistics.Total;
@@ -407,12 +447,12 @@ namespace NotePractice
 
             if (total != 0)
             {
-                accuracy = sessionStatistics.calculateAccuracy(correct, total);
+                accuracy = sessionStatistics.CalculateAccuracy(correct, total);
                 lblAccuracyDisplay.Text = accuracy.ToString("P");
             }
         }
 
-        private void statisticDisplaysClear()
+        private void StatisticDisplaysClear()
         {
             lblPointsDisplay.Text = "";
             lblAccuracyDisplay.Text = "";
@@ -422,8 +462,9 @@ namespace NotePractice
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            sessionTimer.TimerCount--;
+            
             lblTimerDisplay.Text = (sessionTimer.TimerCount).ToString();
+            sessionTimer.TimerCount--;
 
             if (sessionTimer.TimerCount == 0)
             {// when round is over
@@ -431,10 +472,11 @@ namespace NotePractice
                 Timer.Stop();
                 CheckBoxesVisable();
                 lblTimerDisplay.Visible = false;
+                disableKeyBoard = true;
 
                 if (cbFocus.Checked)
                 { // if focus mode enabled - create focus list based on users first round performance
-                    sessionFocus.createFocusList();
+                    sessionFocus.CreateFocusList();
                     sessionFocus.FocusModeEnabled = true;
                 }
             }
@@ -472,6 +514,136 @@ namespace NotePractice
             if (pointFade.FadeTimerCount == 0)
             {
                 FadeTimer.Stop();
+            }
+        }
+
+        private void LoadPresetComboBox()
+        {
+            if (File.Exists("NoterizePresets.sqlite"))
+            {
+                PresetDBHelper.ConnectToDatabase();
+                PresetDBHelper.PrintPresetsComboBox(cbPreset);
+                cbPreset.Text = "Default";
+            }
+            else
+            {
+
+                PresetDBHelper.CreateNewDatabase();
+                PresetDBHelper.ConnectToDatabase();
+                PresetDBHelper.CreateTable();
+                PresetDBHelper.InsertDefault();
+                PresetDBHelper.PrintPresetsComboBox(cbPreset);
+                cbPreset.Text = "Default";
+            }
+        }
+
+        private void RefreshPresetComboBox()
+        {
+            cbPreset.Items.Clear();
+            PresetDBHelper.ConnectToDatabase();
+            PresetDBHelper.PrintPresetsComboBox(cbPreset);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {   // gather all user selected keys and look up in dictionary to get the int value
+            // add int to list to make a user list saved as a string
+            // put string and name of string into preset object and save to db
+
+            try
+            {
+                List<int> usersSelectedKeys = new List<int>();
+             
+                    foreach (CheckBox cb in pnCheckBoxes.Controls.OfType<CheckBox>())
+                    {
+                        if (cb.Checked == true)
+                        {
+                            string cbParse = cb.Name;
+                            cbParse = cbParse.Remove(0, 2);
+                            int cbNumber = Convert.ToInt16(cbParse);
+                            usersSelectedKeys.Add(cbNumber);
+                        }
+                    }
+
+                string myPresetList = "";
+                string name = cbPreset.Text;
+
+                    foreach (int keyNum in usersSelectedKeys)
+                    {
+                        myPresetList += keyNum.ToString() + " ";
+                    }
+
+                if (string.IsNullOrEmpty(name) || (string.IsNullOrEmpty(myPresetList)))
+                {
+                    throw new ApplicationException();  // to ensure that blank presets are not saved
+                }
+
+                Preset newPreset = new Preset(name, myPresetList);
+
+                PresetDBHelper.ConnectToDatabase();
+                PresetDBHelper.InsertPreset(newPreset);
+                RefreshPresetComboBox();
+                MessageBox.Show("New Preset Created ");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Saving preset requires a name and keys selected ");
+            }
+        }
+
+        private Dictionary<int, CheckBox> LookUpCheckBoxes()
+        {
+         Dictionary<int, CheckBox> NumberAllCheckBoxes = new Dictionary<int, CheckBox>();
+
+            List<CheckBox> allCheckBoxNames = new List<CheckBox>()
+            {
+                cb0,cb1,cb2,cb3,cb4,cb5,cb6,cb7,cb8,cb9,cb10,cb11,cb12,cb13,cb14,cb15,cb16,cb17,cb18,cb19,cb20,cb21,
+                cb22,cb23,cb24,cb25,cb26,cb27,cb28,cb29,cb30,cb31,cb32,cb33,cb34,cb35,cb36,cb37,cb38,cb39,cb40,cb41
+            };
+
+            int count = 0;
+            foreach (CheckBox cb in allCheckBoxNames)
+            {
+                NumberAllCheckBoxes.Add(count, cb);
+                count++;
+            }
+            return NumberAllCheckBoxes;
+        }
+
+        private void cbPreset_SelectedIndexChanged(object sender, EventArgs e)
+        {          
+            PresetDBHelper.ConnectToDatabase();
+
+            string preset = "";
+            preset = PresetDBHelper.GetPresetList(cbPreset.Text);
+
+            preset = preset.TrimEnd();
+            string[] presetStrings = preset.Split();
+
+            List<int> presetInts = new List<int>();
+
+                foreach (string str in presetStrings)
+                {
+
+                    presetInts.Add(Convert.ToInt32(str));
+                }
+
+                foreach (CheckBox cb in pnCheckBoxes.Controls.OfType<CheckBox>())
+                {
+                    cb.Checked = false;
+                }
+
+            Dictionary<int, CheckBox> NumberedCheckBoxNames = LookUpCheckBoxes();
+
+            foreach (int cbInt in presetInts)
+            {
+                foreach (KeyValuePair<int, CheckBox> keyString in NumberedCheckBoxNames)
+                {
+                    // look up checkbox name in Dictionary and add number to list
+                    if (cbInt == keyString.Key)
+                    {
+                        keyString.Value.Checked = true;
+                    }
+                }               
             }
         }
     }

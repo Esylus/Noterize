@@ -35,34 +35,6 @@ namespace NotePractice
         private Dictionary<string, string> trebleMidiNamesNoteNames;
         private Dictionary<string, string> bassMidiNamesNoteNames;
 
-        public void InitializeMidi()
-        {
-            int[] inPorts = MidiInputDevice.GetMidiPorts();
-
-            foreach (int port in inPorts)
-            {
-                string name = MidiInputDevice.GetDeviceDescription(port);
-                this.cmbMidi.Items.Add(name);
-            }
-        }
-
-        public void StartMidi()
-        {
-            _inDevice = new MidiInputDevice(this.cmbMidi.SelectedIndex);
-            _inDevice.MessageFilter = BuildFilter();
-            _inDevice.MessageReceived += new MidiMessageEventHandler(InDevice_MessageRecieved);
-            _inDevice.Open();
-            _inDevice.Start();
-        }
-
-        public void StopMidi()
-        {
-            _inDevice.Stop();
-            _inDevice.Close();
-            _inDevice.MessageReceived -= new MidiMessageEventHandler(InDevice_MessageRecieved);
-        }
-
-
        
 
         public void InitializeOnLoad()
@@ -152,7 +124,6 @@ namespace NotePractice
 
                 if (!usersSelectedKeys.Any()) // EDGE CASE - if no keys selected, select all keys by default          
                     CheckBoxSelectAll();
-
             }
 
             if (usersSelectedKeys.Count < 2)
@@ -197,178 +168,10 @@ namespace NotePractice
                 userKeyListObject.ExtractUserRandomKeyToMember(userKeyListObject.UserSelectedKeyList); // Default list
             }
          
-            switch (userKeyListObject.CurrentRandomKey)
-            {// calls note and ledger line of selected random key
-
-                case 41:
-                    N41.Visible = true;
-                    lblBC4.Visible = true;
-                    break;
-                case 40:
-                    N40.Visible = true;
-                    lblBC4.Visible = true;
-                    break;
-                case 39:
-                    N39.Visible = true;
-                    break;
-                case 38:
-                    N38.Visible = true;
-                    break;
-                case 37:
-                    N37.Visible = true;
-                    break;
-                case 36:
-                    N36.Visible = true;
-                    break;
-                case 35:
-                    N35.Visible = true;
-                    break;
-                case 34:
-                    N34.Visible = true;
-                    break;
-                case 33:
-                    N33.Visible = true;
-                    break;
-                case 32:
-                    N32.Visible = true;
-                    break;
-                case 31:
-                    N31.Visible = true;
-                    break;
-                case 30:
-                    N30.Visible = true;
-                    break;
-                case 29:
-                    N29.Visible = true;
-                    break;
-                case 28:
-                    N28.Visible = true;
-                    lblBE2.Visible = true;
-                    break;
-                case 27:
-                    N27.Visible = true;
-                    lblBE2.Visible = true;
-                    break;
-                case 26:
-                    N26.Visible = true;
-                    lblBE2.Visible = true;
-                    lblBC2.Visible = true;
-                    break;
-                case 25:
-                    N25.Visible = true;
-                    lblBE2.Visible = true;
-                    lblBC2.Visible = true;
-                    break;
-                case 24:
-                    N24.Visible = true;
-                    lblBE2.Visible = true;
-                    lblBC2.Visible = true;
-                    lblBA2.Visible = true;
-                    break;
-                case 23:
-                    N23.Visible = true;
-                    lblBE2.Visible = true;
-                    lblBC2.Visible = true;
-                    lblBA2.Visible = true;
-                    break;
-                    // treble clef below, bass clef above
-                case 22:
-                    N22.Visible = true;
-                    lblE6.Visible = true;
-                    lblC5.Visible = true;
-                    lblA5.Visible = true;
-                    break;
-                case 21:
-                    N21.Visible = true;
-                    lblE6.Visible = true;
-                    lblC5.Visible = true;
-                    lblA5.Visible = true;
-                    break;
-                case 20:
-                    N20.Visible = true;
-                    lblC5.Visible = true;
-                    lblA5.Visible = true;
-                    break;
-                case 19:
-                    N19.Visible = true;
-                    lblC5.Visible = true;
-                    lblA5.Visible = true;
-                    break;
-                case 18:
-                    N18.Visible = true;
-                    lblA5.Visible = true;
-                    break;
-                case 17:
-                    N17.Visible = true;
-                    lblA5.Visible = true;
-                    break;
-                case 16:
-                    N16.Visible = true;
-                    break;
-                case 15:
-                    N15.Visible = true;
-                    break;
-                case 14:
-                    N14.Visible = true;
-                    break;
-                case 13:
-                    N13.Visible = true;
-                    break;
-                case 12:
-                    N12.Visible = true;
-                    break;
-                case 11:
-                    N11.Visible = true;
-                    break;
-                case 10:
-                    N10.Visible = true;
-                    break;
-                case 9:
-                    N9.Visible = true;
-                    break;
-                case 8:
-                    N8.Visible = true;
-                    break;
-                case 7:
-                    N7.Visible = true;
-                    break;
-                case 6:
-                    N6.Visible = true;
-                    break;
-                case 5:
-                    N5.Visible = true;
-                    lblC4.Visible = true;
-                    break;
-                case 4:
-                    N4.Visible = true;
-                    lblC4.Visible = true;
-                    break;
-                case 3:
-                    N3.Visible = true;
-                    lblC4.Visible = true;
-                    lblA4.Visible = true;
-                    break;
-                case 2:
-                    N2.Visible = true;
-                    lblC4.Visible = true;
-                    lblA4.Visible = true;
-                    break;
-                case 1:
-                    N1.Visible = true;
-                    lblC4.Visible = true;
-                    lblA4.Visible = true;
-                    lblF4.Visible = true;
-                    break;
-                case 0:
-                    N0.Visible = true;
-                    lblC4.Visible = true;
-                    lblA4.Visible = true;
-                    lblF4.Visible = true;
-                    break;
-
-            }
-
+            GamePlaySwitch(userKeyListObject.CurrentRandomKey);
         }
+
+     
 
         private void CreateDictNoteNamesAndInts()
         {
@@ -391,65 +194,58 @@ namespace NotePractice
 
         private void CreateTrebleDictMidiNamesAndNoteNames()
         {
-            trebleMidiNamesNoteNames = new Dictionary<string, string>();
+            trebleMidiNamesNoteNames = new Dictionary<string, string>()
+            {
+                {"N0", "E2"},{"N1", "F2"},{"N2", "G2"},{"N3", "A2"},{"N4", "B2"},{"N5", "C3"},{"N6", "D3"},
+                {"N7", "E3"},{"N8", "F3"},{"N9", "G3"},{"N10", "A3"},{"N11", "B3"},{"N12", "C4"},{"N13", "D4"},
+                {"N14", "E4"},{"N15", "F4"},{"N16", "G4"},{"N17", "A4"},{"N18", "B4"},{"N19", "C5"},{"N20", "D5"},
+                {"N21", "E5"},{"N22", "F5"}
+            };
 
-            trebleMidiNamesNoteNames.Add("N0", "E2");
-            trebleMidiNamesNoteNames.Add("N1", "F2");
-            trebleMidiNamesNoteNames.Add("N2", "G2");
-            trebleMidiNamesNoteNames.Add("N3", "A2");
-            trebleMidiNamesNoteNames.Add("N4", "B2");
-            trebleMidiNamesNoteNames.Add("N5", "C3");
-            trebleMidiNamesNoteNames.Add("N6", "D3");
-            trebleMidiNamesNoteNames.Add("N7", "E3");
-            trebleMidiNamesNoteNames.Add("N8", "F3");
-            trebleMidiNamesNoteNames.Add("N9", "G3");
-            trebleMidiNamesNoteNames.Add("N10", "A3");
-            trebleMidiNamesNoteNames.Add("N11", "B3");
-            trebleMidiNamesNoteNames.Add("N12", "C4");
-            trebleMidiNamesNoteNames.Add("N13", "D4");
-            trebleMidiNamesNoteNames.Add("N14", "E4");
-            trebleMidiNamesNoteNames.Add("N15", "F4");
-            trebleMidiNamesNoteNames.Add("N16", "G4");
-            trebleMidiNamesNoteNames.Add("N17", "A4");
-            trebleMidiNamesNoteNames.Add("N18", "B4");
-            trebleMidiNamesNoteNames.Add("N19", "C5");
-            trebleMidiNamesNoteNames.Add("N20", "D5");
-            trebleMidiNamesNoteNames.Add("N21", "E5");
-            trebleMidiNamesNoteNames.Add("N22", "F5");
-
-    
         }
 
         private void CreateBassDictMidiNamesAndNoteNames()
         {
-            bassMidiNamesNoteNames = new Dictionary<string, string>();
+            bassMidiNamesNoteNames = new Dictionary<string, string>()
+            { 
+                { "N23", "G0"},{"N24", "A0"},{"N25", "B0"},{"N26", "C1"},{"N27", "D1"},{"N28", "E1"},{"N29", "F1"},
+                {"N30", "G1"},{"N31", "A1"},{"N32", "B1"},{"N33", "C2"},{"N34", "D2"},{"N35", "E2"},{"N36", "F2"},
+                {"N37", "G2"},{"N38", "A2"},{"N39", "B2"},{"N40", "C3"},{"N41", "D3"}              
+            };
+        }
 
-            bassMidiNamesNoteNames.Add("N23", "G0");
-            bassMidiNamesNoteNames.Add("N24", "A0");
-            bassMidiNamesNoteNames.Add("N25", "B0");
-            bassMidiNamesNoteNames.Add("N26", "C1");
-            bassMidiNamesNoteNames.Add("N27", "D1");
-            bassMidiNamesNoteNames.Add("N28", "E1");
-            bassMidiNamesNoteNames.Add("N29", "F1");
-            bassMidiNamesNoteNames.Add("N30", "G1");
-            bassMidiNamesNoteNames.Add("N31", "A1");
-            bassMidiNamesNoteNames.Add("N32", "B1");
-            bassMidiNamesNoteNames.Add("N33", "C2");
-            bassMidiNamesNoteNames.Add("N34", "D2");
-            bassMidiNamesNoteNames.Add("N35", "E2");
-            bassMidiNamesNoteNames.Add("N36", "F2");
-            bassMidiNamesNoteNames.Add("N37", "G2");
-            bassMidiNamesNoteNames.Add("N38", "A2");
-            bassMidiNamesNoteNames.Add("N39", "B2");
-            bassMidiNamesNoteNames.Add("N40", "C3");
-            bassMidiNamesNoteNames.Add("N41", "D3");
+        public void InitializeMidi()
+        {
+            int[] inPorts = MidiInputDevice.GetMidiPorts();
+
+            foreach (int port in inPorts)
+            {
+                string name = MidiInputDevice.GetDeviceDescription(port);
+                this.cmbMidi.Items.Add(name);
+            }
+        }
+
+        public void StartMidi()
+        {
+            _inDevice = new MidiInputDevice(this.cmbMidi.SelectedIndex);
+            _inDevice.MessageFilter = BuildFilter();
+            _inDevice.MessageReceived += new MidiMessageEventHandler(InDevice_MessageRecieved);
+            _inDevice.Open();
+            _inDevice.Start();
+        }
+
+        public void StopMidi()
+        {
+            if (_inDevice != null && _inDevice.IsStarted)
+            {
+                _inDevice.Stop();
+                _inDevice.Close();
+                _inDevice.MessageReceived -= new MidiMessageEventHandler(InDevice_MessageRecieved);
+            }
         }
 
         private void InDevice_MessageRecieved(object sender, MidiMessageEventArgs e)
         {
-            // make dictionary of Notes and ints
-            // lookup parsed midi message in dictionary to get note integer
-            // compare midi note integer to current random key
 
             if (e.IsShortMessage)
             {
@@ -457,83 +253,63 @@ namespace NotePractice
                 string[] parsedMidi = rawMidi.Split();
                 string midiKey = parsedMidi[4].Substring(4, 2);
 
-                string trebleMidiNoteName = "";
-
-                foreach (KeyValuePair<string, string> name in trebleMidiNamesNoteNames)
+                if (parsedMidi[3] == "NoteOn")
                 {
-                    if (name.Value == midiKey)
+                    string trebleMidiNoteName = "";
+
+                    foreach (KeyValuePair<string, string> name in trebleMidiNamesNoteNames)
                     {
-                        trebleMidiNoteName = name.Key;
+                        if (name.Value == midiKey)
+                        {
+                            trebleMidiNoteName = name.Key;
+                        }
+                    }
+
+                    string bassMidiNoteName = "";
+
+                    foreach (KeyValuePair<string, string> name in bassMidiNamesNoteNames)
+                    {
+                        if (name.Value == midiKey)
+                        {
+                            bassMidiNoteName = name.Key;
+                        }
+                    }
+
+                    int trebleMidiKeyInt = 0;
+
+                    foreach (KeyValuePair<int, string> note in numberedNoteNames)
+                    {
+                        if (note.Value == trebleMidiNoteName)
+                        {
+                            trebleMidiKeyInt = note.Key;
+                        }
+                    }
+
+                    int bassMidiKeyInt = 0;
+
+                    foreach (KeyValuePair<int, string> note in numberedNoteNames)
+                    {
+                        if (note.Value == bassMidiNoteName)
+                        {
+                            bassMidiKeyInt = note.Key;
+                        }
+                    }
+
+                    if ((trebleMidiKeyInt == userKeyListObject.CurrentRandomKey) || (bassMidiKeyInt == userKeyListObject.CurrentRandomKey))
+                    {
+                        UserAnswerRight();
+                    }
+                    else 
+                    {
+                        UserAnswerWrong();   
                     }
                 }
-
-                string bassMidiNoteName = "";
-
-                foreach (KeyValuePair<string, string> name in bassMidiNamesNoteNames)
-                {
-                    if (name.Value == midiKey)
-                    {
-                        bassMidiNoteName = name.Key;
-                    }
-                }
-
-                int trebleMidiKeyInt = 0;
-
-                foreach (KeyValuePair<int, string> note in numberedNoteNames)
-                {
-                    if (note.Value == trebleMidiNoteName)
-                    {
-                        trebleMidiKeyInt = note.Key;
-                    }
-                }
-
-                int bassMidiKeyInt = 0;
-
-                foreach (KeyValuePair<int, string> note in numberedNoteNames)
-                {
-                    if (note.Value == bassMidiNoteName)
-                    {
-                        bassMidiKeyInt = note.Key;
-                    }
-                }
-
-              //  MessageBox.Show(midiKey);
-
-                // MessageBox.Show("trebleMidiKeyInt : " + trebleMidiKeyInt + "bassMidiKeyInt " + bassMidiKeyInt);
-
-                // MessageBox.Show("Extracted MidiKeyInt is" + midiKeyInt);
-
-                // MessageBox.Show("Current random key is " + userKeyListObject.CurrentRandomKey);
-
-                if ((trebleMidiKeyInt == userKeyListObject.CurrentRandomKey) || (bassMidiKeyInt == userKeyListObject.CurrentRandomKey))
-                {
-                    UserAnswerRight();
-                }
-                else 
-                {
-                    UserAnswerWrong();   
-                }
             }
-            else if (e.IsSysExMessage)
-            {
-
-            }
-            else if (e.EventType == MidiMessageEventType.Opened)
-            {
-
-            }
-            else if (e.EventType == MidiMessageEventType.Closed)
-            {
-
-            }
-            else if (e.EventType == MidiMessageEventType.Started)
-            {
-
-            }
-            else if (e.EventType == MidiMessageEventType.Stopped)
-            {
-
-            }
+            else if (e.IsSysExMessage){}
+            else if (e.EventType == MidiMessageEventType.Opened){}
+            else if (e.EventType == MidiMessageEventType.Closed){}
+            else if (e.EventType == MidiMessageEventType.Started){}
+            else if (e.EventType == MidiMessageEventType.Stopped){}
         }
 
         private MIDIMessageType BuildFilter()
@@ -872,6 +648,183 @@ namespace NotePractice
                     }
                 }               
             }
+
+        }
+
+        private void GamePlaySwitch(int currentKey)
+            {
+                switch (currentKey)
+                {// calls note and ledger line of selected random key
+
+                    case 41:
+                        N41.Visible = true;
+                        lblBC4.Visible = true;
+                        break;
+                    case 40:
+                        N40.Visible = true;
+                        lblBC4.Visible = true;
+                        break;
+                    case 39:
+                        N39.Visible = true;
+                        break;
+                    case 38:
+                        N38.Visible = true;
+                        break;
+                    case 37:
+                        N37.Visible = true;
+                        break;
+                    case 36:
+                        N36.Visible = true;
+                        break;
+                    case 35:
+                        N35.Visible = true;
+                        break;
+                    case 34:
+                        N34.Visible = true;
+                        break;
+                    case 33:
+                        N33.Visible = true;
+                        break;
+                    case 32:
+                        N32.Visible = true;
+                        break;
+                    case 31:
+                        N31.Visible = true;
+                        break;
+                    case 30:
+                        N30.Visible = true;
+                        break;
+                    case 29:
+                        N29.Visible = true;
+                        break;
+                    case 28:
+                        N28.Visible = true;
+                        lblBE2.Visible = true;
+                        break;
+                    case 27:
+                        N27.Visible = true;
+                        lblBE2.Visible = true;
+                        break;
+                    case 26:
+                        N26.Visible = true;
+                        lblBE2.Visible = true;
+                        lblBC2.Visible = true;
+                        break;
+                    case 25:
+                        N25.Visible = true;
+                        lblBE2.Visible = true;
+                        lblBC2.Visible = true;
+                        break;
+                    case 24:
+                        N24.Visible = true;
+                        lblBE2.Visible = true;
+                        lblBC2.Visible = true;
+                        lblBA2.Visible = true;
+                        break;
+                    case 23:
+                        N23.Visible = true;
+                        lblBE2.Visible = true;
+                        lblBC2.Visible = true;
+                        lblBA2.Visible = true;
+                        break;
+                    // treble clef below, bass clef above
+                    case 22:
+                        N22.Visible = true;
+                        lblE6.Visible = true;
+                        lblC5.Visible = true;
+                        lblA5.Visible = true;
+                        break;
+                    case 21:
+                        N21.Visible = true;
+                        lblE6.Visible = true;
+                        lblC5.Visible = true;
+                        lblA5.Visible = true;
+                        break;
+                    case 20:
+                        N20.Visible = true;
+                        lblC5.Visible = true;
+                        lblA5.Visible = true;
+                        break;
+                    case 19:
+                        N19.Visible = true;
+                        lblC5.Visible = true;
+                        lblA5.Visible = true;
+                        break;
+                    case 18:
+                        N18.Visible = true;
+                        lblA5.Visible = true;
+                        break;
+                    case 17:
+                        N17.Visible = true;
+                        lblA5.Visible = true;
+                        break;
+                    case 16:
+                        N16.Visible = true;
+                        break;
+                    case 15:
+                        N15.Visible = true;
+                        break;
+                    case 14:
+                        N14.Visible = true;
+                        break;
+                    case 13:
+                        N13.Visible = true;
+                        break;
+                    case 12:
+                        N12.Visible = true;
+                        break;
+                    case 11:
+                        N11.Visible = true;
+                        break;
+                    case 10:
+                        N10.Visible = true;
+                        break;
+                    case 9:
+                        N9.Visible = true;
+                        break;
+                    case 8:
+                        N8.Visible = true;
+                        break;
+                    case 7:
+                        N7.Visible = true;
+                        break;
+                    case 6:
+                        N6.Visible = true;
+                        break;
+                    case 5:
+                        N5.Visible = true;
+                        lblC4.Visible = true;
+                        break;
+                    case 4:
+                        N4.Visible = true;
+                        lblC4.Visible = true;
+                        break;
+                    case 3:
+                        N3.Visible = true;
+                        lblC4.Visible = true;
+                        lblA4.Visible = true;
+                        break;
+                    case 2:
+                        N2.Visible = true;
+                        lblC4.Visible = true;
+                        lblA4.Visible = true;
+                        break;
+                    case 1:
+                        N1.Visible = true;
+                        lblC4.Visible = true;
+                        lblA4.Visible = true;
+                        lblF4.Visible = true;
+                        break;
+                    case 0:
+                        N0.Visible = true;
+                        lblC4.Visible = true;
+                        lblA4.Visible = true;
+                        lblF4.Visible = true;
+                        break;
+
+                }
+           
+
         }
     }
 }

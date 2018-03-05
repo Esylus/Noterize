@@ -151,6 +151,7 @@
             this.cbPreset = new System.Windows.Forms.ComboBox();
             this.lblPointsDisplay = new System.Windows.Forms.Label();
             this.FadeTimer = new System.Windows.Forms.Timer(this.components);
+            this.cmbMidi = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.N6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trebleClef)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.N20)).BeginInit();
@@ -1521,6 +1522,14 @@
             // 
             this.FadeTimer.Tick += new System.EventHandler(this.FadeTimer_Tick);
             // 
+            // cmbMidi
+            // 
+            this.cmbMidi.FormattingEnabled = true;
+            this.cmbMidi.Location = new System.Drawing.Point(191, 23);
+            this.cmbMidi.Name = "cmbMidi";
+            this.cmbMidi.Size = new System.Drawing.Size(121, 21);
+            this.cmbMidi.TabIndex = 149;
+            // 
             // Form1
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
@@ -1530,6 +1539,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(742, 765);
+            this.Controls.Add(this.cmbMidi);
             this.Controls.Add(this.N34);
             this.Controls.Add(this.N33);
             this.Controls.Add(this.N32);
@@ -1784,6 +1794,7 @@
         private System.Windows.Forms.ComboBox cbPreset;
         private System.Windows.Forms.Label lblPointsDisplay;
         private System.Windows.Forms.Timer FadeTimer;
+        private System.Windows.Forms.ComboBox cmbMidi;
     }
 }
 

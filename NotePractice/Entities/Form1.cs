@@ -49,6 +49,7 @@ namespace NotePractice
         public void StartMidi()
         {
             _inDevice = new MidiInputDevice(this.cmbMidi.SelectedIndex);
+            _inDevice.MessageFilter = BuildFilter();
             _inDevice.MessageReceived += new MidiMessageEventHandler(InDevice_MessageRecieved);
             _inDevice.Open();
             _inDevice.Start();
@@ -392,29 +393,29 @@ namespace NotePractice
         {
             trebleMidiNamesNoteNames = new Dictionary<string, string>();
 
-            trebleMidiNamesNoteNames.Add("N0", "E3");
-            trebleMidiNamesNoteNames.Add("N1", "F3");
-            trebleMidiNamesNoteNames.Add("N2", "G3");
-            trebleMidiNamesNoteNames.Add("N3", "A3");
-            trebleMidiNamesNoteNames.Add("N4", "B3");
-            trebleMidiNamesNoteNames.Add("N5", "C4");
-            trebleMidiNamesNoteNames.Add("N6", "D4");
-            trebleMidiNamesNoteNames.Add("N7", "E4");
-            trebleMidiNamesNoteNames.Add("N8", "F4");
-            trebleMidiNamesNoteNames.Add("N9", "G4");
-            trebleMidiNamesNoteNames.Add("N10", "A4");
-            trebleMidiNamesNoteNames.Add("N11", "B4");
-            trebleMidiNamesNoteNames.Add("N12", "C5");
-            trebleMidiNamesNoteNames.Add("N13", "D5");
-            trebleMidiNamesNoteNames.Add("N14", "E5");
-            trebleMidiNamesNoteNames.Add("N15", "F5");
-            trebleMidiNamesNoteNames.Add("N16", "G5");
-            trebleMidiNamesNoteNames.Add("N17", "A5");
-            trebleMidiNamesNoteNames.Add("N18", "B5");
-            trebleMidiNamesNoteNames.Add("N19", "C6");
-            trebleMidiNamesNoteNames.Add("N20", "D6");
-            trebleMidiNamesNoteNames.Add("N21", "E6");
-            trebleMidiNamesNoteNames.Add("N22", "F6");
+            trebleMidiNamesNoteNames.Add("N0", "E2");
+            trebleMidiNamesNoteNames.Add("N1", "F2");
+            trebleMidiNamesNoteNames.Add("N2", "G2");
+            trebleMidiNamesNoteNames.Add("N3", "A2");
+            trebleMidiNamesNoteNames.Add("N4", "B2");
+            trebleMidiNamesNoteNames.Add("N5", "C3");
+            trebleMidiNamesNoteNames.Add("N6", "D3");
+            trebleMidiNamesNoteNames.Add("N7", "E3");
+            trebleMidiNamesNoteNames.Add("N8", "F3");
+            trebleMidiNamesNoteNames.Add("N9", "G3");
+            trebleMidiNamesNoteNames.Add("N10", "A3");
+            trebleMidiNamesNoteNames.Add("N11", "B3");
+            trebleMidiNamesNoteNames.Add("N12", "C4");
+            trebleMidiNamesNoteNames.Add("N13", "D4");
+            trebleMidiNamesNoteNames.Add("N14", "E4");
+            trebleMidiNamesNoteNames.Add("N15", "F4");
+            trebleMidiNamesNoteNames.Add("N16", "G4");
+            trebleMidiNamesNoteNames.Add("N17", "A4");
+            trebleMidiNamesNoteNames.Add("N18", "B4");
+            trebleMidiNamesNoteNames.Add("N19", "C5");
+            trebleMidiNamesNoteNames.Add("N20", "D5");
+            trebleMidiNamesNoteNames.Add("N21", "E5");
+            trebleMidiNamesNoteNames.Add("N22", "F5");
 
     
         }
@@ -423,25 +424,25 @@ namespace NotePractice
         {
             bassMidiNamesNoteNames = new Dictionary<string, string>();
 
-            bassMidiNamesNoteNames.Add("N23", "G1");
-            bassMidiNamesNoteNames.Add("N24", "A1");
-            bassMidiNamesNoteNames.Add("N25", "B1");
-            bassMidiNamesNoteNames.Add("N26", "C2");
-            bassMidiNamesNoteNames.Add("N27", "D2");
-            bassMidiNamesNoteNames.Add("N28", "E2");
-            bassMidiNamesNoteNames.Add("N29", "F2");
-            bassMidiNamesNoteNames.Add("N30", "G2");
-            bassMidiNamesNoteNames.Add("N31", "A2");
-            bassMidiNamesNoteNames.Add("N32", "B2");
-            bassMidiNamesNoteNames.Add("N33", "C3");
-            bassMidiNamesNoteNames.Add("N34", "D3");
-            bassMidiNamesNoteNames.Add("N35", "E3");
-            bassMidiNamesNoteNames.Add("N36", "F3");
-            bassMidiNamesNoteNames.Add("N37", "G3");
-            bassMidiNamesNoteNames.Add("N38", "A3");
-            bassMidiNamesNoteNames.Add("N39", "B3");
-            bassMidiNamesNoteNames.Add("N40", "C4");
-            bassMidiNamesNoteNames.Add("N41", "D4");
+            bassMidiNamesNoteNames.Add("N23", "G0");
+            bassMidiNamesNoteNames.Add("N24", "A0");
+            bassMidiNamesNoteNames.Add("N25", "B0");
+            bassMidiNamesNoteNames.Add("N26", "C1");
+            bassMidiNamesNoteNames.Add("N27", "D1");
+            bassMidiNamesNoteNames.Add("N28", "E1");
+            bassMidiNamesNoteNames.Add("N29", "F1");
+            bassMidiNamesNoteNames.Add("N30", "G1");
+            bassMidiNamesNoteNames.Add("N31", "A1");
+            bassMidiNamesNoteNames.Add("N32", "B1");
+            bassMidiNamesNoteNames.Add("N33", "C2");
+            bassMidiNamesNoteNames.Add("N34", "D2");
+            bassMidiNamesNoteNames.Add("N35", "E2");
+            bassMidiNamesNoteNames.Add("N36", "F2");
+            bassMidiNamesNoteNames.Add("N37", "G2");
+            bassMidiNamesNoteNames.Add("N38", "A2");
+            bassMidiNamesNoteNames.Add("N39", "B2");
+            bassMidiNamesNoteNames.Add("N40", "C3");
+            bassMidiNamesNoteNames.Add("N41", "D3");
         }
 
         private void InDevice_MessageRecieved(object sender, MidiMessageEventArgs e)
@@ -496,6 +497,8 @@ namespace NotePractice
                     }
                 }
 
+              //  MessageBox.Show(midiKey);
+
                 // MessageBox.Show("trebleMidiKeyInt : " + trebleMidiKeyInt + "bassMidiKeyInt " + bassMidiKeyInt);
 
                 // MessageBox.Show("Extracted MidiKeyInt is" + midiKeyInt);
@@ -531,6 +534,15 @@ namespace NotePractice
             {
 
             }
+        }
+
+        private MIDIMessageType BuildFilter()
+        {
+            MIDIMessageType filter = MIDIMessageType.Unknown;
+       
+                filter |= MIDIMessageType.SystemRealtime;
+          
+            return filter;
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)

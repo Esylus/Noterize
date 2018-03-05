@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NotePractice.Entities;
+using radio42.Multimedia.Midi;
 
 namespace NotePractice
 {
@@ -18,7 +19,9 @@ namespace NotePractice
         public Form1()
         {
             InitializeComponent();
+            InitializeMidi();
             InitializeOnLoad();
+            
         }
 
         private KeyRandomizer userKeyListObject;
@@ -27,6 +30,39 @@ namespace NotePractice
         private FadeTimer pointFade;
         private Focus sessionFocus;
         private bool disableKeyBoard = true;
+        private MidiInputDevice _inDevice = null;
+        private Dictionary<int, string> numberedNoteNames;
+        private Dictionary<string, string> trebleMidiNamesNoteNames;
+        private Dictionary<string, string> bassMidiNamesNoteNames;
+
+        public void InitializeMidi()
+        {
+            int[] inPorts = MidiInputDevice.GetMidiPorts();
+
+            foreach (int port in inPorts)
+            {
+                string name = MidiInputDevice.GetDeviceDescription(port);
+                this.cmbMidi.Items.Add(name);
+            }
+        }
+
+        public void StartMidi()
+        {
+            _inDevice = new MidiInputDevice(this.cmbMidi.SelectedIndex);
+            _inDevice.MessageReceived += new MidiMessageEventHandler(InDevice_MessageRecieved);
+            _inDevice.Open();
+            _inDevice.Start();
+        }
+
+        public void StopMidi()
+        {
+            _inDevice.Stop();
+            _inDevice.Close();
+            _inDevice.MessageReceived -= new MidiMessageEventHandler(InDevice_MessageRecieved);
+        }
+
+
+       
 
         public void InitializeOnLoad()
         {
@@ -35,6 +71,9 @@ namespace NotePractice
             LedgerLineClear();
             CheckBoxesVisable();
             cbPreset.Text = "Default";
+            CreateDictNoteNamesAndInts();
+            CreateTrebleDictMidiNamesAndNoteNames();
+            CreateBassDictMidiNamesAndNoteNames();
         }
 
         private void btnPractice_Click(object sender, EventArgs e)
@@ -57,7 +96,9 @@ namespace NotePractice
 
             CheckBoxesHidden();
 
-            lblTimerDisplay.Visible = true;      
+            lblTimerDisplay.Visible = true;
+
+            StartMidi();
         }
 
         private void cbFocus_CheckedChanged(object sender, EventArgs e)
@@ -81,6 +122,7 @@ namespace NotePractice
             CheckboxClear();
             CheckBoxesVisable();
             disableKeyBoard = true;
+            StopMidi();
         }
 
 
@@ -325,7 +367,171 @@ namespace NotePractice
 
             }
 
-        }    
+        }
+
+        private void CreateDictNoteNamesAndInts()
+        {
+            List<string> noteImageNames = new List<string>();
+
+            for (int i = 0; i < 42; i++)
+            {
+                noteImageNames.Add("N" + i);
+            }
+
+            numberedNoteNames = new Dictionary<int, string>();
+
+            int count = 0;
+            foreach (String str in noteImageNames)
+            {
+                numberedNoteNames.Add(count, str);
+                count++;
+            }
+        }
+
+        private void CreateTrebleDictMidiNamesAndNoteNames()
+        {
+            trebleMidiNamesNoteNames = new Dictionary<string, string>();
+
+            trebleMidiNamesNoteNames.Add("N0", "E3");
+            trebleMidiNamesNoteNames.Add("N1", "F3");
+            trebleMidiNamesNoteNames.Add("N2", "G3");
+            trebleMidiNamesNoteNames.Add("N3", "A3");
+            trebleMidiNamesNoteNames.Add("N4", "B3");
+            trebleMidiNamesNoteNames.Add("N5", "C4");
+            trebleMidiNamesNoteNames.Add("N6", "D4");
+            trebleMidiNamesNoteNames.Add("N7", "E4");
+            trebleMidiNamesNoteNames.Add("N8", "F4");
+            trebleMidiNamesNoteNames.Add("N9", "G4");
+            trebleMidiNamesNoteNames.Add("N10", "A4");
+            trebleMidiNamesNoteNames.Add("N11", "B4");
+            trebleMidiNamesNoteNames.Add("N12", "C5");
+            trebleMidiNamesNoteNames.Add("N13", "D5");
+            trebleMidiNamesNoteNames.Add("N14", "E5");
+            trebleMidiNamesNoteNames.Add("N15", "F5");
+            trebleMidiNamesNoteNames.Add("N16", "G5");
+            trebleMidiNamesNoteNames.Add("N17", "A5");
+            trebleMidiNamesNoteNames.Add("N18", "B5");
+            trebleMidiNamesNoteNames.Add("N19", "C6");
+            trebleMidiNamesNoteNames.Add("N20", "D6");
+            trebleMidiNamesNoteNames.Add("N21", "E6");
+            trebleMidiNamesNoteNames.Add("N22", "F6");
+
+    
+        }
+
+        private void CreateBassDictMidiNamesAndNoteNames()
+        {
+            bassMidiNamesNoteNames = new Dictionary<string, string>();
+
+            bassMidiNamesNoteNames.Add("N23", "G1");
+            bassMidiNamesNoteNames.Add("N24", "A1");
+            bassMidiNamesNoteNames.Add("N25", "B1");
+            bassMidiNamesNoteNames.Add("N26", "C2");
+            bassMidiNamesNoteNames.Add("N27", "D2");
+            bassMidiNamesNoteNames.Add("N28", "E2");
+            bassMidiNamesNoteNames.Add("N29", "F2");
+            bassMidiNamesNoteNames.Add("N30", "G2");
+            bassMidiNamesNoteNames.Add("N31", "A2");
+            bassMidiNamesNoteNames.Add("N32", "B2");
+            bassMidiNamesNoteNames.Add("N33", "C3");
+            bassMidiNamesNoteNames.Add("N34", "D3");
+            bassMidiNamesNoteNames.Add("N35", "E3");
+            bassMidiNamesNoteNames.Add("N36", "F3");
+            bassMidiNamesNoteNames.Add("N37", "G3");
+            bassMidiNamesNoteNames.Add("N38", "A3");
+            bassMidiNamesNoteNames.Add("N39", "B3");
+            bassMidiNamesNoteNames.Add("N40", "C4");
+            bassMidiNamesNoteNames.Add("N41", "D4");
+        }
+
+        private void InDevice_MessageRecieved(object sender, MidiMessageEventArgs e)
+        {
+            // make dictionary of Notes and ints
+            // lookup parsed midi message in dictionary to get note integer
+            // compare midi note integer to current random key
+
+            if (e.IsShortMessage)
+            {
+                string rawMidi = e.ShortMessage.ToString();
+                string[] parsedMidi = rawMidi.Split();
+                string midiKey = parsedMidi[4].Substring(4, 2);
+
+                string trebleMidiNoteName = "";
+
+                foreach (KeyValuePair<string, string> name in trebleMidiNamesNoteNames)
+                {
+                    if (name.Value == midiKey)
+                    {
+                        trebleMidiNoteName = name.Key;
+                    }
+                }
+
+                string bassMidiNoteName = "";
+
+                foreach (KeyValuePair<string, string> name in bassMidiNamesNoteNames)
+                {
+                    if (name.Value == midiKey)
+                    {
+                        bassMidiNoteName = name.Key;
+                    }
+                }
+
+                int trebleMidiKeyInt = 0;
+
+                foreach (KeyValuePair<int, string> note in numberedNoteNames)
+                {
+                    if (note.Value == trebleMidiNoteName)
+                    {
+                        trebleMidiKeyInt = note.Key;
+                    }
+                }
+
+                int bassMidiKeyInt = 0;
+
+                foreach (KeyValuePair<int, string> note in numberedNoteNames)
+                {
+                    if (note.Value == bassMidiNoteName)
+                    {
+                        bassMidiKeyInt = note.Key;
+                    }
+                }
+
+                // MessageBox.Show("trebleMidiKeyInt : " + trebleMidiKeyInt + "bassMidiKeyInt " + bassMidiKeyInt);
+
+                // MessageBox.Show("Extracted MidiKeyInt is" + midiKeyInt);
+
+                // MessageBox.Show("Current random key is " + userKeyListObject.CurrentRandomKey);
+
+                if ((trebleMidiKeyInt == userKeyListObject.CurrentRandomKey) || (bassMidiKeyInt == userKeyListObject.CurrentRandomKey))
+                {
+                    UserAnswerRight();
+                }
+                else 
+                {
+                    UserAnswerWrong();   
+                }
+            }
+            else if (e.IsSysExMessage)
+            {
+
+            }
+            else if (e.EventType == MidiMessageEventType.Opened)
+            {
+
+            }
+            else if (e.EventType == MidiMessageEventType.Closed)
+            {
+
+            }
+            else if (e.EventType == MidiMessageEventType.Started)
+            {
+
+            }
+            else if (e.EventType == MidiMessageEventType.Stopped)
+            {
+
+            }
+        }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {// if user presses right key then get another note, otherwise keep racking up points
@@ -343,41 +549,49 @@ namespace NotePractice
                   || ((e.KeyCode == Keys.F) && (new[] { 36, 29, 22, 15, 8, 1  }).Contains(userKeyListObject.CurrentRandomKey)))
                   || ((e.KeyCode == Keys.E) && (new[] { 35, 28, 21, 14, 7, 0  }).Contains(userKeyListObject.CurrentRandomKey)))                         
             {
-
-                pointFade = new FadeTimer(0, 255, 0); // for green and red score display
-                pointFade.PositiveOrNegativePoints = true;
-                FadeTimer.Start();
-
-                if (cbFocus.Checked) // if in focus mode, collect user performance data
-                {
-                    sessionFocus.RecordUserResults(userKeyListObject.CurrentRandomKey, 1);
-                }
-
-                sessionStatistics.Correct++;
-                sessionStatistics.Total++;
-                sessionStatistics.TotalPoints += 5;
-                NoteClear();
-                LedgerLineClear();
-                GetRandomKeyAndDisplay();
+                UserAnswerRight();              
             }           
             else if(e.KeyCode >=Keys.A && e.KeyCode <=Keys.Z)
             {
+                UserAnswerWrong();
+            }         
+        }
 
-                pointFade = new FadeTimer(255, 0, 0);
-                pointFade.PositiveOrNegativePoints = false;
-                FadeTimer.Start();
+        private void UserAnswerRight()
+        {
+            pointFade = new FadeTimer(0, 255, 0); // for green and red score display
+            pointFade.PositiveOrNegativePoints = true;
+            FadeTimer.Start();
 
-                if (cbFocus.Checked)
-                {
-                    sessionFocus.RecordUserResults(userKeyListObject.CurrentRandomKey, 0);
-                }
-
-                sessionStatistics.Total++;
-                sessionStatistics.TotalPoints -= 3;
+            if (cbFocus.Checked) // if in focus mode, collect user performance data
+            {
+                sessionFocus.RecordUserResults(userKeyListObject.CurrentRandomKey, 1);
             }
-            GetScoreAndDisplayStatistics();
-        }   
 
+            sessionStatistics.Correct++;
+            sessionStatistics.Total++;
+            sessionStatistics.TotalPoints += 5;
+            NoteClear();
+            LedgerLineClear();
+            GetRandomKeyAndDisplay();
+            GetScoreAndDisplayStatistics();
+        }
+
+        private void UserAnswerWrong()
+        {
+            pointFade = new FadeTimer(255, 0, 0);
+            pointFade.PositiveOrNegativePoints = false;
+            FadeTimer.Start();
+
+            if (cbFocus.Checked)
+            {
+                sessionFocus.RecordUserResults(userKeyListObject.CurrentRandomKey, 0);
+            }
+
+            sessionStatistics.Total++;
+            sessionStatistics.TotalPoints -= 3;
+            GetScoreAndDisplayStatistics();
+        }
         // MAINTAINENCE------------------------------------------------------------------------
 
         private void CheckBoxesHidden()
@@ -473,6 +687,7 @@ namespace NotePractice
                 CheckBoxesVisable();
                 lblTimerDisplay.Visible = false;
                 disableKeyBoard = true;
+                StopMidi();
 
                 if (cbFocus.Checked)
                 { // if focus mode enabled - create focus list based on users first round performance

@@ -43,34 +43,25 @@ namespace NotePractice
             NoteClear();
             LedgerLineClear();
             CheckBoxesVisable();
-            cbPreset.Text = "Default";
+            cbPreset.Text = "Load Preset";
+            cmbMidi.Text = "Typing Keyboard";
             CreateDictNoteNamesAndInts();
-            CreateTrebleDictMidiNamesAndNoteNames();
-            CreateBassDictMidiNamesAndNoteNames();
+            CreateDictMidiNamesAndNoteNames();
         }
 
         private void btnPractice_Click(object sender, EventArgs e)
         {
             userKeyListObject = new KeyRandomizer(PutUserSelectedKeysIntoList());
-
             sessionStatistics = new Statistics();
-
             sessionTimer = new GameTimer();
 
-            NoteClear();
-            
+            NoteClear();          
             LedgerLineClear();
-
             Timer.Start();
-
             disableKeyBoard = false;
-
             GetRandomKeyAndDisplay();
-
             CheckBoxesHidden();
-
             lblTimerDisplay.Visible = true;
-
             StartMidi();
         }
 
@@ -97,11 +88,8 @@ namespace NotePractice
             disableKeyBoard = true;
             StopMidi();
         }
-
-
         
         // GAME OPERATION---------------------------------------------------------------------
-
 
         private List<int> PutUserSelectedKeysIntoList()
         {// go through all checkboxes and return list to practice with
@@ -145,8 +133,6 @@ namespace NotePractice
             return usersSelectedKeys;
         }      
 
-
-
         private void GetRandomKeyAndDisplay()
         {
             if (sessionFocus != null)
@@ -171,7 +157,7 @@ namespace NotePractice
             GamePlaySwitch(userKeyListObject.CurrentRandomKey);
         }
 
-     
+ // ------------------------Creating Reference Dictionaries ---------------------------------------
 
         private void CreateDictNoteNamesAndInts()
         {
@@ -192,8 +178,9 @@ namespace NotePractice
             }
         }
 
-        private void CreateTrebleDictMidiNamesAndNoteNames()
-        {
+        private void CreateDictMidiNamesAndNoteNames()
+        { // associate incoming midi notes with GUI note labels 
+
             trebleMidiNamesNoteNames = new Dictionary<string, string>()
             {
                 {"N0", "E2"},{"N1", "F2"},{"N2", "G2"},{"N3", "A2"},{"N4", "B2"},{"N5", "C3"},{"N6", "D3"},
@@ -202,17 +189,15 @@ namespace NotePractice
                 {"N21", "E5"},{"N22", "F5"}
             };
 
-        }
-
-        private void CreateBassDictMidiNamesAndNoteNames()
-        {
             bassMidiNamesNoteNames = new Dictionary<string, string>()
-            { 
+            {
                 { "N23", "G0"},{"N24", "A0"},{"N25", "B0"},{"N26", "C1"},{"N27", "D1"},{"N28", "E1"},{"N29", "F1"},
                 {"N30", "G1"},{"N31", "A1"},{"N32", "B1"},{"N33", "C2"},{"N34", "D2"},{"N35", "E2"},{"N36", "F2"},
-                {"N37", "G2"},{"N38", "A2"},{"N39", "B2"},{"N40", "C3"},{"N41", "D3"}              
+                {"N37", "G2"},{"N38", "A2"},{"N39", "B2"},{"N40", "C3"},{"N41", "D3"}
             };
         }
+
+//-------------------------------------------Midi Functionality------------------------
 
         public void InitializeMidi()
         {
@@ -244,8 +229,18 @@ namespace NotePractice
             }
         }
 
+        private MIDIMessageType BuildFilter()
+        { // to filter out midi clock signals
+
+            MIDIMessageType filter = MIDIMessageType.Unknown;
+
+            filter |= MIDIMessageType.SystemRealtime;
+
+            return filter;
+        }
+
         private void InDevice_MessageRecieved(object sender, MidiMessageEventArgs e)
-        {
+        { // parse incoming midi message, find correct note from dictionary, get note integer and see if user is right or wrong
 
             if (e.IsShortMessage)
             {
@@ -295,7 +290,8 @@ namespace NotePractice
                         }
                     }
 
-                    if ((trebleMidiKeyInt == userKeyListObject.CurrentRandomKey) || (bassMidiKeyInt == userKeyListObject.CurrentRandomKey))
+                    if ((trebleMidiKeyInt == userKeyListObject.CurrentRandomKey) ||
+                        (bassMidiKeyInt == userKeyListObject.CurrentRandomKey))
                     {
                         UserAnswerRight();
                     }
@@ -305,6 +301,8 @@ namespace NotePractice
                     }
                 }
             }
+
+            // to handle additional midi messages if needed
             else if (e.IsSysExMessage){}
             else if (e.EventType == MidiMessageEventType.Opened){}
             else if (e.EventType == MidiMessageEventType.Closed){}
@@ -312,17 +310,10 @@ namespace NotePractice
             else if (e.EventType == MidiMessageEventType.Stopped){}
         }
 
-        private MIDIMessageType BuildFilter()
-        {
-            MIDIMessageType filter = MIDIMessageType.Unknown;
-       
-                filter |= MIDIMessageType.SystemRealtime;
-          
-            return filter;
-        }
+
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
-        {// if user presses right key then get another note, otherwise keep racking up points
+        {// to handle keyboard input - if user presses right key then get another note, otherwise keep racking up points
 
             if (disableKeyBoard)
             {
@@ -529,8 +520,7 @@ namespace NotePractice
                 cbPreset.Text = "Default";
             }
             else
-            {
-
+            { 
                 PresetDBHelper.CreateNewDatabase();
                 PresetDBHelper.ConnectToDatabase();
                 PresetDBHelper.CreateTable();
